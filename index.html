@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>발표 시작 · Index</title>
+  <!-- 즉시 00.html로 이동 (네트워크 느릴 때를 대비해 아래 목차도 제공) -->
+  <meta http-equiv="refresh" content="0; url=./00.html">
+  <style>
+    :root { color-scheme: dark; }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Noto Sans KR", "Segoe UI", Roboto, Arial, sans-serif;
+      background: #0a1628;
+      color: #e9f2ff;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+    }
+    .card {
+      width: min(1100px, 94vw);
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+      border: 1px solid rgba(0,150,255,0.25);
+      border-radius: 16px;
+      padding: 28px 28px 20px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.35);
+      backdrop-filter: blur(8px);
+    }
+    h1 {
+      margin: 0 0 8px;
+      font-size: clamp(20px, 3.8vw, 28px);
+      background: linear-gradient(135deg, #ffffff 0%, #0096ff 50%, #0066cc 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    p.hint { margin: 0 0 18px; color: #a9c7ff; font-size: 14px; opacity: .9; }
+    .grid { 
+      display: grid; 
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); 
+      gap: 10px; 
+      margin-top: 10px; 
+    }
+    a.item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 12px 14px;
+      text-decoration: none; color: #e9f2ff; border-radius: 10px;
+      background: rgba(0,150,255,0.08); border: 1px solid rgba(0,150,255,0.25);
+      transition: transform .15s ease, background .15s ease, border-color .15s ease;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    a.item:hover { transform: translateX(3px); background: rgba(0,150,255,0.12); border-color: rgba(0,150,255,0.5); }
+    code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12px; opacity: .9; }
+    .kbd { padding: 2px 6px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.06); font-size: 11px; }
+    .footer { margin-top: 18px; font-size: 12px; color: #9fb7e6; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>발표 자료 Index</h1>
+    <p class="hint">네트워크가 느린 경우를 대비해 <span class="kbd">Enter</span>/<span class="kbd">→</span> 또는 항목 클릭으로 이동하세요.</p>
+    <div class="grid" id="toc"></div>
+    <div class="footer">클릭 없이도 키보드/클릭 네비게이션 가능 • 전체화면은 각 슬라이드 더블클릭</div>
+  </div>
+
+  <!-- 슬라이드 네비게이션 (키/클릭) + 자동 목차 생성 -->
+  <script>
+    (function () {
+      try {
+        const slides = [
+          "00.html","01.html","02.html","03.html","04.html","05.html",
+          "06.html","07.html","08.html","09.html","10.html","11.html",
+          "12.html","13.html","14.html","15.html","16.html","17.html",
+          "18.html","19.html","20.html","21.html","22.html"
+        ];
+        let idx = 0; // index.html에서는 0부터 시작
+        
+        // 자동 목차 생성
+        const toc = document.getElementById('toc');
+        const pretty = s => s.replace('.html','').padStart(2,'0');
+        slides.forEach((s) => {
+          const a = document.createElement('a');
+          a.className = 'item';
+          a.href = s;
+          a.innerHTML = `<code>${s}</code> — 슬라이드 ${pretty(s)}`;
+          toc.appendChild(a);
+        });
+
+        function go(i) {
+          const target = slides[(i + slides.length) % slides.length];
+          if (target) window.location.href = target;
+        }
+        function next() { go(idx + 1); }
+        function prev() { go(idx - 1); }
+        
+        window.addEventListener('keydown', function (e) {
+          const tag = (e.target && e.target.tagName) ? e.target.tagName.toLowerCase() : '';
+          const editable = e.target && (e.target.isContentEditable || ['input','textarea','select'].includes(tag));
+          if (editable) return;
+          if (['Enter','ArrowRight','PageDown',' '].includes(e.key)) { e.preventDefault(); next(); }
+          else if (['ArrowLeft','PageUp','Backspace'].includes(e.key)) { e.preventDefault(); prev(); }
+          else if (e.key === 'Home') { e.preventDefault(); go(0); }
+          else if (e.key === 'End') { e.preventDefault(); go(slides.length - 1); }
+        }, true);
+        
+        document.addEventListener('click', function (e) {
+          const interactive = e.target.closest && e.target.closest('a,button,input,textarea,select,video,audio,label,svg');
+          if (!interactive) next();
+        });
+        
+        // 다음 슬라이드 프리패치
+        const link = document.createElement('link');
+        link.rel = 'prefetch';
+        link.as = 'document';
+        link.href = slides[0];
+        document.head.appendChild(link);
+      } catch (err) {
+        console && console.warn && console.warn('Index nav error:', err);
+      }
+    })();
+  </script>
+</body>
+</html>
