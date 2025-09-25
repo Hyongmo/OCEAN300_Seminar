@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>해양수산 AI 응용제품 신속 상용화 지원 사업 추진계획</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans KR', sans-serif;
+            background: #0a1628;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        
+        /* 전체 배경 다크 네이비 */
+        .slide-wrapper {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #0a1628 0%, #1a2942 40%, #0f1e35 100%);
+        }
+        
+        /* 1600x1024 고정 컨테이너 */
+        .slide-container {
+            width: 1600px;
+            height: 1024px;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #0a1628 0%, #1a2942 40%, #0f1e35 100%);
+            transform-origin: center center;
+        }
+        
+        /* 배경 센터 이미지 */
+        .bg-center {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 1600px;
+            height: 1024px;
+            background-image: url('https://raw.githubusercontent.com/Hyongmo/busan-ocean-ai-images/main/center.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0;
+            filter: blur(1px);
+            z-index: 1;
+            animation: fadeInBg 1.5s ease-out forwards;
+        }
+        
+        @keyframes fadeInBg {
+            to {
+                opacity: 0.2;
+            }
+        }
+        
+        /* 메인 컨텐츠 영역 */
+        .content-area {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 1600px;
+            height: 1024px;
+            z-index: 10;
+            padding: 40px 60px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* 헤더 영역 */
+        .header-section {
+            margin-bottom: 25px;
+            opacity: 0;
+            animation: slideInFromTop 0.8s ease-out 0.2s forwards;
+        }
+        
+        @keyframes slideInFromTop {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .project-badge {
+            display: inline-flex;
+            align-items: center;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.15), rgba(0, 102, 255, 0.15));
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 30px;
+            padding: 8px 20px;
+            margin-bottom: 12px;
+        }
+        
+        .badge-text {
+            font-size: 16px;
+            color: #00d4ff;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        
+        .main-title {
+            font-size: 42px;
+            font-weight: 800;
+            color: #ffffff;
+            line-height: 1.1;
+            margin-bottom: 12px;
+            text-shadow: 0 4px 20px rgba(0, 212, 255, 0.3);
+        }
+        
+        .title-highlight {
+            color: #00d4ff;
+            background: linear-gradient(135deg, #00d4ff, #0088cc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .project-info {
+            display: flex;
+            gap: 30px;
+            margin-top: 8px;
+        }
+        
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 15px;
+            opacity: 0;
+            animation: fadeInUp 0.5s ease-out forwards;
+        }
+        
+        .info-item:nth-child(1) { animation-delay: 0.6s; }
+        .info-item:nth-child(2) { animation-delay: 0.7s; }
+        .info-item:nth-child(3) { animation-delay: 0.8s; }
+        .info-item:nth-child(4) { animation-delay: 0.9s; }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .info-label {
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        /* 추진배경 섹션 */
+        .background-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 0;
+            opacity: 0;
+            animation: slideInFromLeft 0.8s ease-out 1s forwards;
+        }
+        
+        @keyframes slideInFromLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .section-number {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #00d4ff, #0088cc);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: 700;
+            color: #0a1628;
+        }
+        
+        .section-text {
+            font-size: 28px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+        
+        /* 상단 2개 카드 수평 배치 */
+        .cards-row {
+            display: flex;
+            gap: 20px;
+        }
+        
+        /* 첫 번째 카드 - 글로벌 경쟁 */
+        .card-global {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 20px;
+            padding: 18px 20px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37),
+                        inset 0 2px 3px rgba(255, 255, 255, 0.1);
+            opacity: 0;
+            animation: scaleIn 0.6s ease-out 1.3s forwards;
+        }
+        
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        .card-global::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, 
+                rgba(0, 212, 255, 0.05) 0%, 
+                transparent 60%);
+            pointer-events: none;
+        }
+        
+        .card-global:hover {
+            transform: translateY(-4px);
+            border-color: rgba(0, 212, 255, 0.4);
+            background: rgba(255, 255, 255, 0.06);
+            box-shadow: 0 12px 48px rgba(0, 212, 255, 0.2),
+                        inset 0 2px 3px rgba(255, 255, 255, 0.15);
+        }
+        
+        /* 두 번째 카드 - AI 현황 */
+        .card-status {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 20px;
+            padding: 18px 20px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37),
+                        inset 0 2px 3px rgba(255, 255, 255, 0.1);
+            opacity: 0;
+            animation: scaleIn 0.6s ease-out 1.5s forwards;
+        }
+        
+        .card-status::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, 
+                rgba(0, 212, 255, 0.05) 0%, 
+                transparent 60%);
+            pointer-events: none;
+        }
+        
+        .card-status:hover {
+            transform: translateY(-4px);
+            border-color: rgba(0, 212, 255, 0.4);
+            background: rgba(255, 255, 255, 0.06);
+            box-shadow: 0 12px 48px rgba(0, 212, 255, 0.2),
+                        inset 0 2px 3px rgba(255, 255, 255, 0.15);
+        }
+        
+        /* 세 번째 카드 - AX-Sprint */
+        .card-sprint {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 20px;
+            padding: 18px 25px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37),
+                        inset 0 2px 3px rgba(255, 255, 255, 0.1);
+            opacity: 0;
+            animation: slideInFromBottom 0.8s ease-out 1.7s forwards;
+        }
+        
+        @keyframes slideInFromBottom {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .card-sprint::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, 
+                rgba(0, 212, 255, 0.05) 0%, 
+                transparent 60%);
+            pointer-events: none;
+        }
+        
+        .card-sprint:hover {
+            transform: translateY(-4px);
+            border-color: rgba(0, 212, 255, 0.4);
+            background: rgba(255, 255, 255, 0.06);
+            box-shadow: 0 12px 48px rgba(0, 212, 255, 0.2),
+                        inset 0 2px 3px rgba(255, 255, 255, 0.15);
+        }
+        
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .card-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.25), rgba(0, 102, 255, 0.25));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            animation: rotateIcon 0.6s ease-out 0.3s forwards;
+            opacity: 0;
+        }
+        
+        @keyframes rotateIcon {
+            from {
+                opacity: 0;
+                transform: rotate(-180deg);
+            }
+            to {
+                opacity: 1;
+                transform: rotate(0);
+            }
+        }
+        
+        .card-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+        
+        .card-content {
+            font-size: 18px;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.8);
+            position: relative;
+            z-index: 2;
+        }
+        
+        .emphasis {
+            color: #00d4ff;
+            font-weight: 600;
+        }
+        
+        .quote {
+            font-style: italic;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 16px;
+            margin-top: 10px;
+            padding-left: 15px;
+            border-left: 2px solid rgba(0, 212, 255, 0.3);
+            line-height: 1.5;
+        }
+        
+        /* 목표 컨테이너 */
+        .goals-container {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.08), rgba(0, 102, 255, 0.04));
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(0, 212, 255, 0.25);
+            border-radius: 20px;
+            padding: 25px 30px;
+            margin-top: 5px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2),
+                        inset 0 1px 2px rgba(255, 255, 255, 0.1);
+            opacity: 0;
+            animation: fadeInScale 0.8s ease-out 2s forwards;
+        }
+        
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        .goals-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #00d4ff;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        /* 목표 그리드 - 4개 가로 배치 */
+        .goals-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+        
+        .goal-item {
+            text-align: center;
+            padding: 18px 12px;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 212, 255, 0.1);
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            opacity: 0;
+            animation: bounceIn 0.6s ease-out forwards;
+        }
+        
+        .goal-item:nth-child(1) { animation-delay: 2.2s; }
+        .goal-item:nth-child(2) { animation-delay: 2.3s; }
+        .goal-item:nth-child(3) { animation-delay: 2.4s; }
+        .goal-item:nth-child(4) { animation-delay: 2.5s; }
+        
+        @keyframes bounceIn {
+            from {
+                opacity: 0;
+                transform: scale(0.3);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        .goal-item:hover {
+            background: rgba(0, 212, 255, 0.12);
+            transform: translateY(-3px);
+            border-color: rgba(0, 212, 255, 0.3);
+        }
+        
+        .goal-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #00d4ff, #0088cc);
+            border-radius: 50%;
+            font-weight: 700;
+            font-size: 24px;
+            color: #0a1628;
+            margin-bottom: 12px;
+        }
+        
+        .goal-text {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.4;
+            font-weight: 600;
+        }
+        
+        /* 장식 요소 */
+        .decoration-dots {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            opacity: 0;
+            z-index: 2;
+            animation: fadeInDots 1s ease-out 0.5s forwards;
+        }
+        
+        @keyframes fadeInDots {
+            to {
+                opacity: 0.08;
+            }
+        }
+        
+        .dots-1 {
+            top: 100px;
+            right: 100px;
+            background: radial-gradient(circle, #00d4ff 2px, transparent 2px);
+            background-size: 20px 20px;
+        }
+        
+        .dots-2 {
+            bottom: 100px;
+            left: 100px;
+            background: radial-gradient(circle, #0088cc 2px, transparent 2px);
+            background-size: 20px 20px;
+        }
+        
+        /* 반응형 스케일링 */
+        @media (max-width: 1600px) {
+            .slide-container {
+                transform: scale(0.9);
+            }
+        }
+        
+        @media (max-width: 1440px) {
+            .slide-container {
+                transform: scale(0.8);
+            }
+        }
+        
+        @media (max-width: 1280px) {
+            .slide-container {
+                transform: scale(0.7);
+            }
+        }
+        
+        @media (max-width: 1024px) {
+            .slide-container {
+                transform: scale(0.6);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .slide-container {
+                transform: scale(0.45);
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .slide-container {
+                transform: scale(0.3);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-wrapper">
+        <div class="slide-container" id="slideContainer">
+            <!-- 배경 센터 이미지 -->
+            <div class="bg-center"></div>
+            
+            <!-- 장식 요소 -->
+            <div class="decoration-dots dots-1"></div>
+            <div class="decoration-dots dots-2"></div>
+            
+            <!-- 메인 컨텐츠 -->
+            <div class="content-area">
+                <!-- 헤더 -->
+                <div class="header-section">
+                    <div class="project-badge">
+                        <span class="badge-text">AX-Sprint 프로젝트</span>
+                    </div>
+                    <h1 class="main-title">
+                        해양수산 <span class="title-highlight">AI 응용제품</span> 신속 상용화 지원 사업 추진계획
+                    </h1>
+                    <div class="project-info">
+                        <div class="info-item">
+                            <span class="info-label">사업기간</span>
+                            <span>'26년 ~ '27년</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">총사업비</span>
+                            <span>1조 1,570.83억원</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">국비</span>
+                            <span>9,340억원</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">참여부처</span>
+                            <span>10개 부처 공동</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 추진배경 섹션 -->
+                <div class="background-section">
+                    <div class="section-title">
+                        <div class="section-number">1</div>
+                        <div class="section-text">추진배경</div>
+                    </div>
+                    
+                    <!-- 상단 2개 카드 수평 배치 -->
+                    <div class="cards-row">
+                        <div class="card-global">
+                            <div class="card-header">
+                                <div class="card-icon">🌏</div>
+                                <div class="card-title">인공지능 관련 글로벌 경쟁 심화</div>
+                            </div>
+                            <div class="card-content">
+                                인공지능 관련 글로벌 경쟁이 심화되는 가운데, AGI 등 원천기술 개발만큼 <span class="emphasis">인공지능전환(AX)과 적용이 매우 중요해진 상황</span><br><br>
+                                AI를 활용해 기업의 의사결정·제품개발·제조공정 등을 혁신하는 AX 전략은 <span class="emphasis">모든 산업에서 생존을 위한 필수전략</span>이 되고 있음
+                                <div class="quote">
+                                    * 조주완 LG전자 : 인공지능전환(AX) 속도가 사업 성패를 좌우하게 될 것<br>
+                                    * 손정의 SoftBank : AI 채택 여부가 기업 경쟁력을 가를 것
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card-status">
+                            <div class="card-header">
+                                <div class="card-icon">📊</div>
+                                <div class="card-title">AI 적용 제품·서비스 개발 현황</div>
+                            </div>
+                            <div class="card-content">
+                                제조·식품·의료 등의 全산업에서 <span class="emphasis">AI를 적용한 제품·서비스의 개발과 출시</span>가 활발히 진행되고 있으나, 아직은 초기 단계<br><br>
+                                <span class="emphasis">* 국내 69%의 대기업은 여전히 AI를 효율 개선, 업무 간소화 등 기초적인 수준에만 사용, 10%만 AI 기반 신제품·서비스 활용</span>(AWS, 25년)<br><br>
+                                이에 정부는 자율주행차·휴머노이드 등 핵심기술 중심으로 대규모 투자 예정이나, 사업화 등의 <span class="emphasis">성과 창출에는 상당 시간 소요 예상</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 하단 전체 너비 카드 -->
+                    <div class="card-sprint">
+                        <div class="card-header">
+                            <div class="card-icon">🚀</div>
+                            <div class="card-title">AX-Sprint 프로젝트 추진</div>
+                        </div>
+                        <div class="card-content">
+                            AI 융합산업 중 <span class="emphasis">단기내 성과창출이 가능한 유망분야를 선정</span>하여, 이를 집중 지원하는 <span class="emphasis">'AX-Sprint(전력질주)' 프로젝트 추진</span>
+                        </div>
+                    </div>
+                    
+                    <!-- 목표 4개 가로 배치 -->
+                    <div class="goals-container">
+                        <div class="goals-title">이를 통해 추진하고자 하는 목표</div>
+                        <div class="goals-grid">
+                            <div class="goal-item">
+                                <div class="goal-number">➊</div>
+                                <div class="goal-text">AI 관련 제품·서비스 신시장을 빠르게 창출</div>
+                            </div>
+                            <div class="goal-item">
+                                <div class="goal-number">➋</div>
+                                <div class="goal-text">기존 제조·서비스 기업들의 AX를 가속화</div>
+                            </div>
+                            <div class="goal-item">
+                                <div class="goal-number">➌</div>
+                                <div class="goal-text">새로운 AI 전문기업 육성</div>
+                            </div>
+                            <div class="goal-item">
+                                <div class="goal-number">➍</div>
+                                <div class="goal-text">AI 관련 국민 체감도와 인식 제고</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 반응형 스케일 조정
+        function adjustScale() {
+            const container = document.getElementById('slideContainer');
+            const baseWidth = 1600;
+            const baseHeight = 1024;
+            const aspectRatio = baseWidth / baseHeight;
+            
+            const viewportWidth = window.innerWidth;
+            const viewportHeight = window.innerHeight;
+            const viewportRatio = viewportWidth / viewportHeight;
+            
+            let scale;
+            if (viewportRatio > aspectRatio) {
+                scale = viewportHeight / baseHeight;
+            } else {
+                scale = viewportWidth / baseWidth;
+            }
+            
+            // 최소/최대 스케일 제한
+            scale = Math.max(0.3, Math.min(scale, 2));
+            
+            container.style.transform = `scale(${scale})`;
+        }
+        
+        // 초기 실행
+        adjustScale();
+        
+        // 리사이즈 이벤트 처리
+        let resizeTimer;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(adjustScale, 100);
+        });
+        
+        // 화면 회전 처리
+        window.addEventListener('orientationchange', () => {
+            setTimeout(adjustScale, 100);
+        });
+        
+        // 전체화면 변경 처리
+        document.addEventListener('fullscreenchange', adjustScale);
+        
+        // 페이지 로드 완료 시 재조정
+        window.addEventListener('load', adjustScale);
+        
+        // 더블클릭으로 전체화면 토글
+        document.getElementById('slideContainer').addEventListener('dblclick', () => {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen();
+            } else if (document.exitFullscreen) {
+                document.exitFullscreen();
+            }
+        });
+    </script>
+<!-- Navigation injected on 2025-09-20 16:13 -->
+<script>
+(function () {
+  try {
+    const slides = [
+      "00.html",          
+      "01.html",
+      "02.html",
+      "03.html",
+      "04.html",
+      "05.html",
+      "06.html",
+      "07.html",
+      "08.html",
+      "09.html",
+      "10.html",
+      "11.html",
+      "12.html",
+      "13.html",
+      "14.html",
+      "15.html",
+      "16.html",
+      "17.html",
+      "18.html",
+      "19.html",
+      "20.html",
+      "21.html",
+      "22.html"
+    ];
+
+    const current = decodeURIComponent(window.location.pathname.split('/').pop() || '');
+    // NFC 매칭
+    const toNFC = s => (String.prototype.normalize ? s.normalize('NFC') : s);
+    const slidesN = slides.map(toNFC);
+    let idx = slidesN.indexOf(toNFC(current));
+
+    // 못 찾았을 때도 UX 안전하게 0으로 보정
+    if (idx < 0) idx = 0;
+
+    function go(i) {
+      const target = slides[(i + slides.length) % slides.length];
+      if (target) window.location.href = target;
+    }
+    function next() { go(idx + 1); }
+    function prev() { go(idx - 1); }
+
+    window.addEventListener('keydown', function (e) {
+      const tag = (e.target && e.target.tagName) ? e.target.tagName.toLowerCase() : '';
+      const editable = e.target && (e.target.isContentEditable || ['input','textarea','select'].includes(tag));
+      if (editable) return;
+
+      if (['ArrowRight','PageDown',' '].includes(e.key)) { e.preventDefault(); next(); }
+      else if (['ArrowLeft','PageUp','Backspace'].includes(e.key)) { e.preventDefault(); prev(); }
+      else if (e.key === 'Home') { e.preventDefault(); go(0); }
+      else if (e.key === 'End') { e.preventDefault(); go(slides.length - 1); }
+    }, true);
+
+    document.addEventListener('click', function (e) {
+      const interactive = e.target.closest && e.target.closest('a,button,input,textarea,select,video,audio,label,svg');
+      if (!interactive) next();
+    });
+
+    const hud = document.createElement('div');
+    hud.setAttribute('data-slide-hud', '1');
+    Object.assign(hud.style, {
+      position: 'fixed', right: '16px', bottom: '12px',
+      padding: '6px 10px', fontSize: '13px', lineHeight: '1.2',
+      borderRadius: '10px', background: 'rgba(0,0,0,0.35)', color: '#fff',
+      backdropFilter: 'blur(3px)', zIndex: 9999, userSelect: 'none', pointerEvents: 'none'
+    });
+    hud.textContent = ((idx + 1) + ' / ' + slides.length) + '  •  ← / → 또는 클릭';
+    document.body.appendChild(hud);
+
+    const link = document.createElement('link');
+    link.rel = 'prefetch';
+    link.as = 'document';
+    link.href = slides[(idx + 1) % slides.length];
+    document.head.appendChild(link);
+
+  } catch (err) {
+    console && console.warn && console.warn('Slide nav error:', err);
+  }
+})();
+</script>
+</body>
+</html>

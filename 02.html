@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>목차 - 해양과학기술 산학연 협력센터</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Pretendard', 'Noto Sans KR', -apple-system, sans-serif;
+            overflow: hidden;
+            background: #0a1628;
+            margin: 0;
+            padding: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* 반응형 컨테이너 */
+        .slide-wrapper {
+            width: 100%;
+            height: 100%;
+            background: #0a1628;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .slide-container {
+            width: 100%;
+            max-width: 1600px;
+            height: 100%;
+            max-height: 1024px;
+            aspect-ratio: 1600 / 1024;
+            position: relative;
+            background: radial-gradient(ellipse at center bottom, 
+                rgba(0, 82, 138, 0.3) 0%, 
+                rgba(0, 51, 102, 0.2) 25%, 
+                rgba(14, 35, 56, 0.5) 50%, 
+                #0a1628 100%),
+                linear-gradient(180deg, 
+                #0a1628 0%, 
+                #0f2338 30%, 
+                #122945 60%, 
+                #0a1628 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        /* 반응형 스케일링 */
+        @media (max-width: 1600px) {
+            .slide-container {
+                width: 100vw;
+                height: calc(100vw * 0.64);
+            }
+        }
+        
+        @media (max-height: 1024px) and (min-aspect-ratio: 1600/1024) {
+            .slide-container {
+                height: 100vh;
+                width: calc(100vh * 1.5625);
+            }
+        }
+        
+        /* 센터 조감도 배경 */
+        .center-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://raw.githubusercontent.com/Hyongmo/busan-ocean-ai-images/main/center.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0;
+            filter: blur(0.5px) brightness(0.9);
+            mix-blend-mode: screen;
+            animation: fadeIn 1.5s ease-out 0.3s forwards;
+        }
+        
+        @keyframes fadeIn {
+            to { opacity: 0.20; }
+        }
+        
+        /* 바다 물결 그라디언트 효과 */
+        .ocean-waves {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            opacity: 0;
+            animation: fadeInWaves 1s ease-out 0.5s forwards;
+        }
+        
+        @keyframes fadeInWaves {
+            to { opacity: 0.25; }
+        }
+        
+        .wave-gradient {
+            position: absolute;
+            width: 200%;
+            height: 100%;
+            background: linear-gradient(90deg,
+                transparent 0%,
+                rgba(0, 119, 190, 0.1) 25%,
+                rgba(0, 150, 255, 0.2) 50%,
+                rgba(0, 119, 190, 0.1) 75%,
+                transparent 100%);
+            animation: wave-flow 20s linear infinite;
+        }
+        
+        .wave-gradient:nth-child(2) {
+            background: linear-gradient(90deg,
+                transparent 0%,
+                rgba(0, 183, 255, 0.1) 30%,
+                rgba(0, 229, 255, 0.15) 60%,
+                rgba(0, 183, 255, 0.1) 80%,
+                transparent 100%);
+            animation-delay: -5s;
+            animation-duration: 25s;
+            opacity: 0.6;
+        }
+        
+        .wave-gradient:nth-child(3) {
+            background: linear-gradient(90deg,
+                transparent 0%,
+                rgba(0, 95, 152, 0.08) 35%,
+                rgba(0, 140, 210, 0.12) 65%,
+                rgba(0, 95, 152, 0.08) 85%,
+                transparent 100%);
+            animation-delay: -10s;
+            animation-duration: 30s;
+            opacity: 0.8;
+        }
+        
+        @keyframes wave-flow {
+            0% { transform: translateX(-50%); }
+            100% { transform: translateX(0); }
+        }
+        
+        /* 깊이감을 위한 오버레이 */
+        .depth-overlay {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 50%, 
+                transparent 0%, 
+                rgba(10, 22, 40, 0.1) 50%, 
+                rgba(10, 22, 40, 0.3) 100%);
+            pointer-events: none;
+        }
+        
+        /* 빛나는 입자 효과 */
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: rgba(0, 255, 255, 0.5);
+            border-radius: 50%;
+            box-shadow: 0 0 6px rgba(0, 255, 255, 0.3);
+            animation: float-up 15s infinite ease-in-out;
+        }
+        
+        @keyframes float-up {
+            0%, 100% { 
+                transform: translateY(100vh) translateX(0);
+                opacity: 0;
+            }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            50% { 
+                transform: translateY(-100vh) translateX(50px);
+            }
+        }
+        
+        /* 메인 컨텐츠 */
+        .content-wrapper {
+            position: relative;
+            z-index: 10;
+            width: 90%;
+            max-width: 1200px;
+            padding: 4% 5%;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 0.3s forwards;
+        }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+        }
+        
+        /* 목차 제목 */
+        .contents-title {
+            font-size: clamp(36px, 3.5vw, 52px);
+            font-weight: 700;
+            color: #ffffff;
+            text-align: center;
+            margin-bottom: clamp(50px, 6vh, 80px);
+            letter-spacing: 0.1em;
+            position: relative;
+            display: inline-block;
+            width: 100%;
+            opacity: 0;
+            animation: titleFadeIn 0.8s ease-out 0.5s forwards;
+        }
+        
+        @keyframes titleFadeIn {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+        }
+        
+        .contents-title::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%) scaleX(0);
+            width: clamp(100px, 10vw, 150px);
+            height: 3px;
+            background: linear-gradient(90deg, 
+                transparent, 
+                #0080ff 20%, 
+                #0080ff 80%, 
+                transparent);
+            box-shadow: 0 0 10px rgba(0, 128, 255, 0.5);
+            animation: lineExpand 0.6s ease-out 0.8s forwards;
+        }
+        
+        @keyframes lineExpand {
+            to {
+                transform: translateX(-50%) scaleX(1);
+            }
+        }
+        
+        /* 목차 컨테이너 */
+        .contents-container {
+            display: flex;
+            flex-direction: column;
+            gap: clamp(25px, 3vh, 35px);
+            padding: 0 clamp(20px, 5vw, 80px);
+        }
+        
+        /* 목차 항목 */
+        .contents-item {
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, 
+                rgba(0, 150, 255, 0.08) 0%, 
+                rgba(0, 100, 200, 0.05) 100%);
+            border-left: 4px solid #0080ff;
+            padding: clamp(20px, 2.5vh, 30px) clamp(30px, 3vw, 45px);
+            border-radius: 0 10px 10px 0;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateX(-50px);
+        }
+        
+        .contents-item:nth-child(1) {
+            animation: slideIn 0.6s ease-out 0.8s forwards;
+        }
+        
+        .contents-item:nth-child(2) {
+            animation: slideIn 0.6s ease-out 1s forwards;
+        }
+        
+        .contents-item:nth-child(3) {
+            animation: slideIn 0.6s ease-out 1.2s forwards;
+        }
+        
+        .contents-item:nth-child(4) {
+            animation: slideIn 0.6s ease-out 1.4s forwards;
+        }
+        
+        @keyframes slideIn {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .contents-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 0;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                rgba(0, 150, 255, 0.2), 
+                transparent);
+            transition: width 0.3s ease;
+        }
+        
+        .contents-item:hover {
+            transform: translateX(10px);
+            background: linear-gradient(135deg, 
+                rgba(0, 150, 255, 0.12) 0%, 
+                rgba(0, 100, 200, 0.08) 100%);
+            box-shadow: 0 5px 20px rgba(0, 150, 255, 0.2);
+        }
+        
+        .contents-item:hover::before {
+            width: 100%;
+        }
+        
+        /* 강조 항목 (4번) */
+        .contents-item.highlight {
+            background: linear-gradient(135deg, 
+                rgba(0, 150, 255, 0.08) 0%, 
+                rgba(0, 100, 200, 0.05) 100%);
+            border-left-color: #00ff88;
+            border-left-width: 4px;
+        }
+        
+        .contents-item.highlight .item-number {
+            background: linear-gradient(135deg, #00ff88, #00cc6a);
+            box-shadow: 0 0 15px rgba(0, 255, 136, 0.4);
+            animation: numberPulse 2s ease-in-out 2s infinite;
+        }
+        
+        @keyframes numberPulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+        
+        .contents-item.highlight .item-text {
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        /* 번호 */
+        .item-number {
+            width: clamp(40px, 4vw, 55px);
+            height: clamp(40px, 4vw, 55px);
+            background: linear-gradient(135deg, #0080ff, #0066cc);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: clamp(18px, 1.8vw, 24px);
+            font-weight: 700;
+            color: white;
+            margin-right: clamp(20px, 2.5vw, 35px);
+            flex-shrink: 0;
+            box-shadow: 0 0 15px rgba(0, 128, 255, 0.3);
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* 텍스트 */
+        .item-text {
+            font-size: clamp(18px, 1.8vw, 26px);
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.4;
+            font-weight: 500;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* 코너 장식 */
+        .corner-decoration {
+            position: absolute;
+            width: clamp(60px, 6vw, 100px);
+            height: clamp(60px, 6vw, 100px);
+            border: 2px solid rgba(0, 128, 255, 0.4);
+            box-shadow: 0 0 10px rgba(0, 128, 255, 0.2);
+            opacity: 0;
+            animation: cornerFadeIn 0.8s ease-out 1.6s forwards;
+        }
+        
+        @keyframes cornerFadeIn {
+            to { opacity: 1; }
+        }
+        
+        .corner-decoration.top-left {
+            top: clamp(20px, 3vh, 40px);
+            left: clamp(20px, 3vw, 40px);
+            border-right: none;
+            border-bottom: none;
+        }
+        
+        .corner-decoration.top-right {
+            top: clamp(20px, 3vh, 40px);
+            right: clamp(20px, 3vw, 40px);
+            border-left: none;
+            border-bottom: none;
+            animation-delay: 1.7s;
+        }
+        
+        .corner-decoration.bottom-left {
+            bottom: clamp(20px, 3vh, 40px);
+            left: clamp(20px, 3vw, 40px);
+            border-right: none;
+            border-top: none;
+            animation-delay: 1.8s;
+        }
+        
+        .corner-decoration.bottom-right {
+            bottom: clamp(20px, 3vh, 40px);
+            right: clamp(20px, 3vw, 40px);
+            border-left: none;
+            border-top: none;
+            animation-delay: 1.9s;
+        }
+        
+        /* 하단 주최 주관 영역 */
+        .logo-area {
+            position: absolute;
+            bottom: clamp(30px, 4vh, 50px);
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255, 255, 255, 0.5);
+            font-size: clamp(13px, 1.1vw, 16px);
+            text-align: center;
+            line-height: 1.6;
+            letter-spacing: 0.05em;
+            opacity: 0;
+            animation: fadeInSimple 1s ease-out 2s forwards;
+        }
+        
+        @keyframes fadeInSimple {
+            to { opacity: 1; }
+        }
+        
+        /* 작은 화면 대응 */
+        @media (max-width: 768px) {
+            .content-wrapper {
+                padding: 3% 4%;
+            }
+            
+            .contents-container {
+                gap: 20px;
+                padding: 0 20px;
+            }
+            
+            .contents-item {
+                padding: 20px 25px;
+            }
+            
+            .item-text {
+                font-size: clamp(16px, 4vw, 22px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-wrapper">
+        <div class="slide-container">
+            <!-- 센터 조감도 배경 -->
+            <div class="center-bg"></div>
+            
+            <!-- 바다 물결 그라디언트 -->
+            <div class="ocean-waves">
+                <div class="wave-gradient"></div>
+                <div class="wave-gradient"></div>
+                <div class="wave-gradient"></div>
+            </div>
+            
+            <!-- 깊이감 오버레이 -->
+            <div class="depth-overlay"></div>
+            
+            <!-- 빛나는 입자들 -->
+            <div class="particles">
+                <div class="particle" style="top: 80%; left: 10%; animation-delay: 0s;"></div>
+                <div class="particle" style="top: 85%; left: 25%; animation-delay: 2s;"></div>
+                <div class="particle" style="top: 90%; left: 40%; animation-delay: 4s;"></div>
+                <div class="particle" style="top: 75%; left: 60%; animation-delay: 6s;"></div>
+                <div class="particle" style="top: 88%; left: 75%; animation-delay: 8s;"></div>
+                <div class="particle" style="top: 82%; left: 90%; animation-delay: 10s;"></div>
+            </div>
+            
+            <!-- 코너 장식 -->
+            <div class="corner-decoration top-left"></div>
+            <div class="corner-decoration top-right"></div>
+            <div class="corner-decoration bottom-left"></div>
+            <div class="corner-decoration bottom-right"></div>
+            
+            <!-- 메인 컨텐츠 -->
+            <div class="content-wrapper">
+                <h2 class="contents-title">목 차</h2>
+                
+                <div class="contents-container">
+                    <div class="contents-item">
+                        <div class="item-number">1</div>
+                        <div class="item-text">한국해양수산개발원 소개</div>
+                    </div>
+                    
+                    <div class="contents-item">
+                        <div class="item-number">2</div>
+                        <div class="item-text">해양과학기술 산학연 협력센터 추진배경</div>
+                    </div>
+                    
+                    <div class="contents-item">
+                        <div class="item-number">3</div>
+                        <div class="item-text">해양과학기술 산학연 협력센터 사업설명</div>
+                    </div>
+                    
+                    <div class="contents-item highlight">
+                        <div class="item-number">4</div>
+                        <div class="item-text">해양수산 AI 응용제품 신속 상용화 지원 사업 소개(KIMST)</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 주최 주관 영역 -->
+            <div class="logo-area">
+                주최 및 주관: 부산광역시, 한국해양수산개발원, 부산테크노파크
+            </div>
+        </div>
+    </div>
+<!-- Navigation injected on 2025-09-20 16:13 -->
+<script>
+(function () {
+  try {
+    const slides = [
+      "00.html",          
+      "01.html",
+      "02.html",
+      "03.html",
+      "04.html",
+      "05.html",
+      "06.html",
+      "07.html",
+      "08.html",
+      "09.html",
+      "10.html",
+      "11.html",
+      "12.html",
+      "13.html",
+      "14.html",
+      "15.html",
+      "16.html",
+      "17.html",
+      "18.html",
+      "19.html",
+      "20.html",
+      "21.html",
+      "22.html"
+    ];
+
+    const current = decodeURIComponent(window.location.pathname.split('/').pop() || '');
+    // NFC 매칭
+    const toNFC = s => (String.prototype.normalize ? s.normalize('NFC') : s);
+    const slidesN = slides.map(toNFC);
+    let idx = slidesN.indexOf(toNFC(current));
+
+    // 못 찾았을 때도 UX 안전하게 0으로 보정
+    if (idx < 0) idx = 0;
+
+    function go(i) {
+      const target = slides[(i + slides.length) % slides.length];
+      if (target) window.location.href = target;
+    }
+    function next() { go(idx + 1); }
+    function prev() { go(idx - 1); }
+
+    window.addEventListener('keydown', function (e) {
+      const tag = (e.target && e.target.tagName) ? e.target.tagName.toLowerCase() : '';
+      const editable = e.target && (e.target.isContentEditable || ['input','textarea','select'].includes(tag));
+      if (editable) return;
+
+      if (['ArrowRight','PageDown',' '].includes(e.key)) { e.preventDefault(); next(); }
+      else if (['ArrowLeft','PageUp','Backspace'].includes(e.key)) { e.preventDefault(); prev(); }
+      else if (e.key === 'Home') { e.preventDefault(); go(0); }
+      else if (e.key === 'End') { e.preventDefault(); go(slides.length - 1); }
+    }, true);
+
+    document.addEventListener('click', function (e) {
+      const interactive = e.target.closest && e.target.closest('a,button,input,textarea,select,video,audio,label,svg');
+      if (!interactive) next();
+    });
+
+    const hud = document.createElement('div');
+    hud.setAttribute('data-slide-hud', '1');
+    Object.assign(hud.style, {
+      position: 'fixed', right: '16px', bottom: '12px',
+      padding: '6px 10px', fontSize: '13px', lineHeight: '1.2',
+      borderRadius: '10px', background: 'rgba(0,0,0,0.35)', color: '#fff',
+      backdropFilter: 'blur(3px)', zIndex: 9999, userSelect: 'none', pointerEvents: 'none'
+    });
+    hud.textContent = ((idx + 1) + ' / ' + slides.length) + '  •  ← / → 또는 클릭';
+    document.body.appendChild(hud);
+
+    const link = document.createElement('link');
+    link.rel = 'prefetch';
+    link.as = 'document';
+    link.href = slides[(idx + 1) % slides.length];
+    document.head.appendChild(link);
+
+  } catch (err) {
+    console && console.warn && console.warn('Slide nav error:', err);
+  }
+})();
+</script>
+</body>
+</html>

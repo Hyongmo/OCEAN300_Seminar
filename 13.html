@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>해양과학기술 산학연 협력센터 사업개요</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap');
+
+        body, html {
+            font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            background: #0a1628;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .presentation-container {
+            width: 1600px;
+            height: 1024px;
+            max-width: 100vw;
+            max-height: 100vh;
+            position: relative;
+            background: linear-gradient(135deg, #0a1628 0%, #1a2942 40%, #0f1e35 100%);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+        }
+
+        .background-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://raw.githubusercontent.com/Hyongmo/busan-ocean-ai-images/main/center.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 1;
+            filter: blur(0);
+            z-index: 1;
+            animation: fadeBackground 3s ease-in-out forwards;
+        }
+
+        @keyframes fadeBackground {
+            0% {
+                opacity: 1;
+                filter: blur(0);
+            }
+            33% {
+                opacity: 1;
+                filter: blur(0);
+            }
+            100% {
+                opacity: 0.2;
+                filter: blur(1px);
+            }
+        }
+
+        .content-wrapper {
+            position: relative;
+            z-index: 10;
+            height: 100%;
+            padding: 60px 100px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            opacity: 0;
+            animation: fadeInContent 2s ease-in-out 1s forwards;
+        }
+
+        @keyframes fadeInContent {
+            0% {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .main-title {
+            text-align: center;
+            margin-bottom: 20px;
+            position: relative;
+            animation: titleSlideIn 0.8s ease-out 1.2s forwards;
+            opacity: 0;
+        }
+
+        @keyframes titleSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .main-title h1 {
+            color: #ffffff;
+            font-size: 52px;
+            font-weight: 700;
+            letter-spacing: -1px;
+            text-shadow: 0 4px 20px rgba(0, 212, 255, 0.3);
+            margin-bottom: 10px;
+            position: relative;
+        }
+
+        .main-title::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 4px;
+            background: linear-gradient(90deg, #00a8ff, #00d4aa);
+            border-radius: 2px;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            flex: 1;
+            align-items: start;
+        }
+
+        .section {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 35px 40px;
+            backdrop-filter: blur(40px) saturate(150%);
+            -webkit-backdrop-filter: blur(40px) saturate(150%);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .section:hover {
+            background: rgba(255, 255, 255, 0.12);
+            transform: translateY(-5px);
+            border-color: rgba(0, 212, 255, 0.4);
+            box-shadow: 0 20px 40px rgba(0, 212, 255, 0.2);
+            backdrop-filter: blur(50px) saturate(180%);
+            -webkit-backdrop-filter: blur(50px) saturate(180%);
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .section-icon {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #00a8ff, #00d4aa);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            color: white;
+        }
+
+        .section-title h2 {
+            color: #ffffff;
+            font-size: 28px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+        }
+
+        .section-content {
+            color: #e0e6ed;
+            line-height: 1.8;
+            flex: 1;
+        }
+
+        .highlight-box {
+            background: rgba(0, 168, 255, 0.08);
+            border-left: 4px solid #00a8ff;
+            padding: 15px 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .highlight-box strong {
+            color: #00d4aa;
+            font-weight: 600;
+            font-size: 16px;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin: 14px 0;
+            font-size: 15px;
+        }
+
+        .info-label {
+            color: #00a8ff;
+            min-width: 75px;
+            font-weight: 500;
+        }
+
+        .info-value {
+            color: #f0f4f8;
+            flex: 1;
+            line-height: 1.5;
+        }
+
+        .emphasis {
+            color: #00d4aa;
+            font-weight: 600;
+            background: linear-gradient(90deg, #00a8ff, #00d4aa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .bullet-list {
+            list-style: none;
+            margin: 10px 0;
+        }
+
+        .bullet-list li {
+            position: relative;
+            padding-left: 25px;
+            margin: 10px 0;
+            color: #e0e6ed;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .bullet-list li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: #00a8ff;
+            font-weight: bold;
+        }
+
+        @media (max-width: 1600px) {
+            .presentation-container {
+                transform: scale(0.9);
+                transform-origin: center;
+            }
+        }
+
+        @media (max-width: 1440px) {
+            .presentation-container {
+                transform: scale(0.8);
+            }
+        }
+
+        @media (max-width: 1280px) {
+            .presentation-container {
+                transform: scale(0.7);
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .presentation-container {
+                transform: scale(0.6);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 1s ease-out forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section:nth-child(1) {
+            animation-delay: 1.5s;
+        }
+
+        .section:nth-child(2) {
+            animation-delay: 1.7s;
+        }
+
+        /* 초기 상태 숨김 */
+        .content-grid {
+            opacity: 0;
+            animation: gridFadeIn 0.8s ease-out 1.5s forwards;
+        }
+
+        @keyframes gridFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <div class="background-image"></div>
+        <div class="content-wrapper">
+            <div class="main-title fade-in">
+                <h1>해양과학기술 산학연 협력센터 사업개요</h1>
+            </div>
+
+            <div class="content-grid">
+                <div class="section fade-in">
+                    <div class="section-title">
+                        <div class="section-icon">📍</div>
+                        <h2>추진방향</h2>
+                    </div>
+                    <div class="section-content">
+                        <div class="highlight-box" style="font-size: 20px; line-height: 1.8;">
+                            <strong style="font-size: 22px;">해수부 부산 이전 추진과 함께</strong>
+                            국가 해양정책 실행 중심지로서 기존 해양R&D 인프라와 조선·해운·항만 등 <span class="emphasis">해양산업 기반</span>을 연결
+                        </div>
+                        
+                        <ul class="bullet-list" style="font-size: 20px;">
+                            <li><strong style="color: #00d4aa;">정책-기술-산업-인재가 융합된</strong> 국가 해양산업 전략거점으로 도약</li>
+                            <li>AI데이터 기반 해양산업 솔루션을 개발·확산하는 <span class="emphasis">해양 AI 선도거점</span></li>
+                        </ul>
+
+                        <div class="highlight-box" style="margin-top: 30px; font-size: 20px; line-height: 1.8;">
+                            <strong style="font-size: 22px;">총괄체계</strong>
+                            센터 활성화를 위한 전담조직 및 거버넌스 구성<br>
+                            <span style="font-size: 18px; opacity: 0.9;">동삼혁신지구는 해양클러스터 공공기관, 해양대 등 대학, 연구소 등 해양 R&D 자원이 풍부하나, 기술사업화, 실증, 창업 연계 성과 미흡</span>
+                        </div>
+                        
+                        <p style="margin-top: 20px; font-size: 20px; font-weight: 600; color: #00d4aa; text-align: center;">
+                            ▶ 역량이 결집되는 해양산업 특화 산학연관 협력 통합 플랫폼 조성
+                        </p>
+                    </div>
+                </div>
+
+                <div class="section fade-in">
+                    <div class="section-title">
+                        <div class="section-icon">🏢</div>
+                        <h2>센터개요</h2>
+                    </div>
+                    <div class="section-content">
+                        <div class="info-item" style="font-size: 20px;">
+                            <span class="info-label" style="font-size: 20px; min-width: 100px;">사업명</span>
+                            <span class="info-value" style="font-size: 20px;">해양과학기술 산학연 협력센터(STEM빌리지)</span>
+                        </div>
+                        
+                        <div class="info-item" style="font-size: 20px;">
+                            <span class="info-label" style="font-size: 20px; min-width: 100px;">사업위치</span>
+                            <span class="info-value" style="font-size: 20px;">영도구 동삼동 1163(동삼혁신지구 내)</span>
+                        </div>
+                        
+                        <div class="info-item" style="font-size: 20px;">
+                            <span class="info-label" style="font-size: 20px; min-width: 100px;">사업규모</span>
+                            <span class="info-value" style="font-size: 20px;">부지 5,868㎡, 연면적 10,385㎡<br>▸ 지하 1층, 지상 7층</span>
+                        </div>
+                        
+                        <div class="info-item" style="font-size: 20px;">
+                            <span class="info-label" style="font-size: 20px; min-width: 100px;">총사업비</span>
+                            <span class="info-value" style="font-size: 20px;"><strong style="color: #00d4aa; font-size: 22px;">322.5억원</strong> (국비 70%, 시비 30%)</span>
+                        </div>
+                        
+                        <div class="highlight-box" style="margin-top: 30px; font-size: 20px; line-height: 1.8;">
+                            <strong style="font-size: 22px;">주요시설</strong>
+                            <ul class="bullet-list" style="margin-top: 10px; font-size: 20px;">
+                                <li>산학연 협업공간(연구개발실)</li>
+                                <li>전산실(데이터 오픈랩)</li>
+                                <li>입주공간(37개실)</li>
+                                <li>코워킹 스페이스(스타트업 집중 육성)</li>
+                                <li>세미나실, 회의실, 휴게공간 등</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- Navigation injected on 2025-09-20 16:13 -->
+<script>
+(function () {
+  try {
+    const slides = [
+      "00.html",          
+      "01.html",
+      "02.html",
+      "03.html",
+      "04.html",
+      "05.html",
+      "06.html",
+      "07.html",
+      "08.html",
+      "09.html",
+      "10.html",
+      "11.html",
+      "12.html",
+      "13.html",
+      "14.html",
+      "15.html",
+      "16.html",
+      "17.html",
+      "18.html",
+      "19.html",
+      "20.html",
+      "21.html",
+      "22.html"
+    ];
+
+    const current = decodeURIComponent(window.location.pathname.split('/').pop() || '');
+    // NFC 매칭
+    const toNFC = s => (String.prototype.normalize ? s.normalize('NFC') : s);
+    const slidesN = slides.map(toNFC);
+    let idx = slidesN.indexOf(toNFC(current));
+
+    // 못 찾았을 때도 UX 안전하게 0으로 보정
+    if (idx < 0) idx = 0;
+
+    function go(i) {
+      const target = slides[(i + slides.length) % slides.length];
+      if (target) window.location.href = target;
+    }
+    function next() { go(idx + 1); }
+    function prev() { go(idx - 1); }
+
+    window.addEventListener('keydown', function (e) {
+      const tag = (e.target && e.target.tagName) ? e.target.tagName.toLowerCase() : '';
+      const editable = e.target && (e.target.isContentEditable || ['input','textarea','select'].includes(tag));
+      if (editable) return;
+
+      if (['ArrowRight','PageDown',' '].includes(e.key)) { e.preventDefault(); next(); }
+      else if (['ArrowLeft','PageUp','Backspace'].includes(e.key)) { e.preventDefault(); prev(); }
+      else if (e.key === 'Home') { e.preventDefault(); go(0); }
+      else if (e.key === 'End') { e.preventDefault(); go(slides.length - 1); }
+    }, true);
+
+    document.addEventListener('click', function (e) {
+      const interactive = e.target.closest && e.target.closest('a,button,input,textarea,select,video,audio,label,svg');
+      if (!interactive) next();
+    });
+
+    const hud = document.createElement('div');
+    hud.setAttribute('data-slide-hud', '1');
+    Object.assign(hud.style, {
+      position: 'fixed', right: '16px', bottom: '12px',
+      padding: '6px 10px', fontSize: '13px', lineHeight: '1.2',
+      borderRadius: '10px', background: 'rgba(0,0,0,0.35)', color: '#fff',
+      backdropFilter: 'blur(3px)', zIndex: 9999, userSelect: 'none', pointerEvents: 'none'
+    });
+    hud.textContent = ((idx + 1) + ' / ' + slides.length) + '  •  ← / → 또는 클릭';
+    document.body.appendChild(hud);
+
+    const link = document.createElement('link');
+    link.rel = 'prefetch';
+    link.as = 'document';
+    link.href = slides[(idx + 1) % slides.length];
+    document.head.appendChild(link);
+
+  } catch (err) {
+    console && console.warn && console.warn('Slide nav error:', err);
+  }
+})();
+</script>
+</body>
+</html>

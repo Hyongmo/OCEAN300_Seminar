@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KMI 해양수산 빅데이터 플랫폼</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Pretendard', 'Noto Sans KR', -apple-system, sans-serif;
+            overflow: hidden;
+            background: #0a1628;
+            margin: 0;
+            padding: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .slide-wrapper {
+            width: 100%;
+            height: 100%;
+            background: #0a1628;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .slide-container {
+            width: 100%;
+            max-width: 1600px;
+            height: 100%;
+            max-height: 1024px;
+            aspect-ratio: 1600 / 1024;
+            position: relative;
+            background: radial-gradient(ellipse at center bottom, 
+                rgba(0, 82, 138, 0.3) 0%, 
+                rgba(0, 51, 102, 0.2) 25%, 
+                rgba(14, 35, 56, 0.5) 50%, 
+                #0a1628 100%),
+                linear-gradient(180deg, 
+                #0a1628 0%, 
+                #0f2338 30%, 
+                #122945 60%, 
+                #0a1628 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        /* 센터 조감도 배경 */
+        .center-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://raw.githubusercontent.com/Hyongmo/busan-ocean-ai-images/main/center.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0.12;
+            filter: blur(0.8px) brightness(0.9);
+            mix-blend-mode: screen;
+        }
+        
+        /* 메인 컨텐츠 */
+        .content-wrapper {
+            position: relative;
+            z-index: 10;
+            color: white;
+            padding: 3% 3%;
+            width: 95%;
+            max-width: 1500px;
+            height: 90%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* 타이틀 섹션 */
+        .title-section {
+            text-align: center;
+            margin-bottom: 15px;
+            opacity: 0;
+            animation: fadeInDown 1s ease-out 0.3s forwards;
+        }
+        
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .main-title {
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #ffffff 0%, #0096ff 50%, #0066cc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 2px 15px rgba(0, 150, 255, 0.5));
+        }
+        
+        .sub-title {
+            font-size: 20px;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 400;
+            line-height: 1.5;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        /* 목표 섹션 */
+        .objectives-section {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(0, 150, 255, 0.3);
+            border-radius: 15px;
+            padding: 15px 25px;
+            margin-bottom: 15px;
+            backdrop-filter: blur(10px);
+            opacity: 0;
+            animation: fadeIn 1s ease-out 0.6s forwards;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .objectives-header {
+            font-size: 20px;
+            font-weight: 600;
+            color: #0096ff;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .objectives-list {
+            display: flex;
+            justify-content: space-around;
+            gap: 20px;
+        }
+        
+        .objective-item {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            background: rgba(0, 100, 200, 0.1);
+            border-radius: 10px;
+            border: 1px solid rgba(0, 150, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .objective-item:hover {
+            transform: translateY(-5px);
+            background: rgba(0, 100, 200, 0.2);
+            box-shadow: 0 5px 20px rgba(0, 150, 255, 0.3);
+        }
+        
+        .objective-number {
+            display: inline-block;
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(135deg, #0080ff, #0066cc);
+            border-radius: 50%;
+            line-height: 35px;
+            font-weight: 700;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        
+        .objective-text {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.85);
+            line-height: 1.5;
+        }
+        
+        /* 프로세스 섹션 */
+        .process-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 0.9s forwards;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .process-header {
+            font-size: 20px;
+            font-weight: 600;
+            color: #0096ff;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .process-flow {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 0 20px;
+        }
+        
+        .process-step {
+            flex: 1;
+            position: relative;
+            text-align: center;
+        }
+        
+        .step-circle {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 10px;
+            background: linear-gradient(135deg, #0096ff, #00d4ff);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 20px rgba(0, 150, 255, 0.4);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .step-circle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 30px rgba(0, 150, 255, 0.6);
+        }
+        
+        .step-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: white;
+            line-height: 1.2;
+        }
+        
+        .step-content {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(0, 150, 255, 0.2);
+            border-radius: 10px;
+            padding: 10px;
+            min-height: 100px;
+        }
+        
+        .step-description {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.4;
+            margin-bottom: 8px;
+        }
+        
+        .step-details {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.65);
+            line-height: 1.3;
+        }
+        
+        .step-details li {
+            margin-bottom: 3px;
+            text-align: left;
+        }
+        
+        /* 화살표 */
+        .process-arrow {
+            position: absolute;
+            top: 50px;
+            right: -25px;
+            width: 50px;
+            height: 2px;
+            background: linear-gradient(90deg, #0096ff, transparent);
+            z-index: 1;
+        }
+        
+        .process-arrow::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: -4px;
+            width: 0;
+            height: 0;
+            border-left: 10px solid #0096ff;
+            border-top: 5px solid transparent;
+            border-bottom: 5px solid transparent;
+        }
+        
+        .process-step:last-child .process-arrow {
+            display: none;
+        }
+        
+        /* 참여기관 섹션 */
+        .partners-section {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(0, 150, 255, 0.3);
+            border-radius: 15px;
+            padding: 15px;
+            margin-top: auto;
+            backdrop-filter: blur(10px);
+            opacity: 0;
+            animation: fadeIn 1s ease-out 1.2s forwards;
+        }
+        
+        .partners-header {
+            font-size: 18px;
+            font-weight: 600;
+            color: #0096ff;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .partners-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        
+        .partner-category {
+            background: rgba(0, 100, 200, 0.08);
+            padding: 12px;
+            border-radius: 10px;
+            border-left: 3px solid #0080ff;
+        }
+        
+        .category-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #00a6ff;
+            margin-bottom: 5px;
+        }
+        
+        .category-info {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 5px;
+        }
+        
+        .partner-logos {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-top: 8px;
+        }
+        
+        .partner-chip {
+            background: rgba(0, 150, 255, 0.1);
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(0, 150, 255, 0.3);
+        }
+        
+        /* 하단 로고 */
+        .bottom-logo {
+            position: absolute;
+            bottom: 20px;
+            right: 30px;
+            opacity: 0.5;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-wrapper">
+        <div class="slide-container">
+            <!-- 센터 조감도 배경 -->
+            <div class="center-bg"></div>
+            
+            <!-- 메인 컨텐츠 -->
+            <div class="content-wrapper">
+                <div class="title-section">
+                    <h1 class="main-title">해양수산 빅데이터 플랫폼</h1>
+                    <p class="sub-title">
+                        분절·산재되어 있는 해양·수산 분야 데이터를 체계적으로 수집하고 융·복합하여<br>
+                        데이터 기반 해양수산업 경쟁력 강화 및 디지털 전환 가속화
+                    </p>
+                </div>
+                
+                <!-- 목표 섹션 -->
+                <div class="objectives-section">
+                    <div class="objectives-header">플랫폼 주요 목표</div>
+                    <div class="objectives-list">
+                        <div class="objective-item">
+                            <div class="objective-number">1</div>
+                            <div class="objective-text">
+                                해양·수산 분야<br>
+                                데이터 활용성 제고
+                            </div>
+                        </div>
+                        <div class="objective-item">
+                            <div class="objective-number">2</div>
+                            <div class="objective-text">
+                                데이터 기반<br>
+                                해양수산업 경쟁력 강화
+                            </div>
+                        </div>
+                        <div class="objective-item">
+                            <div class="objective-number">3</div>
+                            <div class="objective-text">
+                                해양·수산 분야<br>
+                                디지털 전환 정책 가속화
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 프로세스 섹션 -->
+                <div class="process-section">
+                    <div class="process-header">빅데이터 플랫폼 운영 프로세스</div>
+                    <div class="process-flow">
+                        <div class="process-step">
+                            <div class="step-circle">
+                                <span class="step-title">플랫폼<br>지능화</span>
+                            </div>
+                            <div class="process-arrow"></div>
+                            <div class="step-content">
+                                <div class="step-description">정시성, 일관성 확보</div>
+                                <ul class="step-details">
+                                    <li>자동화 데이터 취득 체계 확립</li>
+                                    <li>표준 관리 체계 수립, 일관성 보안성 확보</li>
+                                    <li>전처리 자동화 프로세스 구축</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="process-step">
+                            <div class="step-circle">
+                                <span class="step-title">데이터<br>가치화</span>
+                            </div>
+                            <div class="process-arrow"></div>
+                            <div class="step-content">
+                                <div class="step-description">해양수산 분야 공공·민간</div>
+                                <ul class="step-details">
+                                    <li><strong style="color: #0096ff;">데이터 융합</strong>으로 수요자 중심의 가치 창출 및 유통체계 마련</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="process-step">
+                            <div class="step-circle">
+                                <span class="step-title">데이터<br>유통망</span>
+                            </div>
+                            <div class="process-arrow"></div>
+                            <div class="step-content">
+                                <div class="step-description">수요자 데이터 요구 대응</div>
+                                <ul class="step-details">
+                                    <li>시스템 구축</li>
+                                    <li><strong style="color: #0096ff;">이용자 편의성</strong>을 강화한 마켓플레이스 구축</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="process-step">
+                            <div class="step-circle">
+                                <span class="step-title">유연한<br>플랫폼</span>
+                            </div>
+                            <div class="step-content">
+                                <div class="step-description">신규 가치창출 유연 플랫폼</div>
+                                <ul class="step-details">
+                                    <li>플랫폼-센터 간 실시간 연계</li>
+                                    <li>강화, 선 순환 구조와 데이터 유통체계</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 참여기관 섹션 -->
+                <div class="partners-section">
+                    <div class="partners-header">플랫폼 참여기관</div>
+                    <div class="partners-grid">
+                        <div class="partner-category">
+                            <div class="category-title">해양수산 빅데이터 플랫폼 참여기관</div>
+                            <div class="category-info">(8개 기관)</div>
+                            <div class="partner-logos">
+                                <span class="partner-chip">한국해양수산개발원</span>
+                                <span class="partner-chip">한국어촌어항공단</span>
+                                <span class="partner-chip">부산항만공사</span>
+                                <span class="partner-chip">부산대학교</span>
+                                <span class="partner-chip">동의대학교</span>
+                                <span class="partner-chip">티맥스티베로</span>
+                                <span class="partner-chip">미래아이티</span>
+                                <span class="partner-chip">울산항만공사</span>
+                            </div>
+                        </div>
+                        
+                        <div class="partner-category">
+                            <div class="category-title">해양수산 빅데이터 센터 참여기관</div>
+                            <div class="category-info">(11개 센터 / 27개 기관)</div>
+                            <div class="partner-logos">
+                                <span class="partner-chip">시드뱅크</span>
+                                <span class="partner-chip">스마트로</span>
+                                <span class="partner-chip">유니스트</span>
+                                <span class="partner-chip">KOI머신</span>
+                                <span class="partner-chip">트레드링스</span>
+                                <span class="partner-chip">환경과학기술</span>
+                                <span class="partner-chip">전략해양</span>
+                                <span class="partner-chip">LAB021</span>
+                                <span class="partner-chip">KOMERI</span>
+                                <span class="partner-chip">국립목포대학교</span>
+                                <span class="partner-chip">넥타르테크놀로지</span>
+                                <span class="partner-chip">빌리언21</span>
+                                <span class="partner-chip">LT2Korea</span>
+                                <span class="partner-chip">한국해양대학교</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 하단 로고 -->
+            <div class="bottom-logo">
+                KMI | KOREA MARITIME INSTITUTE
+            </div>
+        </div>
+    </div>
+
+<script>
+(function () {
+  try {
+    const slides = [
+      "00.html",          
+      "01.html",
+      "02.html",
+      "03.html",
+      "04.html",
+      "05.html",
+      "06.html",
+      "07.html",
+      "08.html",
+      "09.html",
+      "10.html",
+      "11.html",
+      "12.html",
+      "13.html",
+      "14.html",
+      "15.html",
+      "16.html",
+      "17.html",
+      "18.html",
+      "19.html",
+      "20.html",
+      "21.html",
+      "22.html"
+    ];
+
+    const current = decodeURIComponent(window.location.pathname.split('/').pop() || '');
+    // NFC 매칭
+    const toNFC = s => (String.prototype.normalize ? s.normalize('NFC') : s);
+    const slidesN = slides.map(toNFC);
+    let idx = slidesN.indexOf(toNFC(current));
+
+    // 못 찾았을 때도 UX 안전하게 0으로 보정
+    if (idx < 0) idx = 0;
+
+    function go(i) {
+      const target = slides[(i + slides.length) % slides.length];
+      if (target) window.location.href = target;
+    }
+    function next() { go(idx + 1); }
+    function prev() { go(idx - 1); }
+
+    window.addEventListener('keydown', function (e) {
+      const tag = (e.target && e.target.tagName) ? e.target.tagName.toLowerCase() : '';
+      const editable = e.target && (e.target.isContentEditable || ['input','textarea','select'].includes(tag));
+      if (editable) return;
+
+      if (['ArrowRight','PageDown',' '].includes(e.key)) { e.preventDefault(); next(); }
+      else if (['ArrowLeft','PageUp','Backspace'].includes(e.key)) { e.preventDefault(); prev(); }
+      else if (e.key === 'Home') { e.preventDefault(); go(0); }
+      else if (e.key === 'End') { e.preventDefault(); go(slides.length - 1); }
+    }, true);
+
+    document.addEventListener('click', function (e) {
+      const interactive = e.target.closest && e.target.closest('a,button,input,textarea,select,video,audio,label,svg');
+      if (!interactive) next();
+    });
+
+    const hud = document.createElement('div');
+    hud.setAttribute('data-slide-hud', '1');
+    Object.assign(hud.style, {
+      position: 'fixed', right: '16px', bottom: '12px',
+      padding: '6px 10px', fontSize: '13px', lineHeight: '1.2',
+      borderRadius: '10px', background: 'rgba(0,0,0,0.35)', color: '#fff',
+      backdropFilter: 'blur(3px)', zIndex: 9999, userSelect: 'none', pointerEvents: 'none'
+    });
+    hud.textContent = ((idx + 1) + ' / ' + slides.length) + '  •  ← / → 또는 클릭';
+    document.body.appendChild(hud);
+
+    const link = document.createElement('link');
+    link.rel = 'prefetch';
+    link.as = 'document';
+    link.href = slides[(idx + 1) % slides.length];
+    document.head.appendChild(link);
+
+  } catch (err) {
+    console && console.warn && console.warn('Slide nav error:', err);
+  }
+})();
+</script>
+</body>
+</html>

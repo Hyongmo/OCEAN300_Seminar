@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>해외 해양 클러스터 현황</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans KR', sans-serif;
+            background: #0a1628;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        
+        /* 전체 배경 다크 네이비 */
+        .slide-wrapper {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #0a1628 0%, #1a2942 40%, #0f1e35 100%);
+        }
+        
+        /* 1600x1024 고정 컨테이너 */
+        .slide-container {
+            width: 1600px;
+            height: 1024px;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #0a1628 0%, #1a2942 40%, #0f1e35 100%);
+            transform-origin: center center;
+        }
+        
+        /* 배경 센터 이미지 */
+        .bg-center {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 1600px;
+            height: 1024px;
+            background-image: url('https://raw.githubusercontent.com/Hyongmo/busan-ocean-ai-images/main/center.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0.2;
+            filter: blur(1px);
+            z-index: 1;
+        }
+        
+        /* 메인 컨텐츠 영역 */
+        .content-area {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 1600px;
+            height: 1024px;
+            z-index: 10;
+            padding: 80px;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+        
+        /* 타이틀 영역 */
+        .title-section {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .main-title {
+            font-size: 48px;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 10px;
+            text-shadow: 0 4px 20px rgba(0, 212, 255, 0.3);
+            letter-spacing: -1px;
+        }
+        
+        .sub-title {
+            font-size: 22px;
+            color: #00d4ff;
+            font-weight: 300;
+        }
+        
+        /* 클러스터 그리드 */
+        .clusters-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            flex: 1;
+        }
+        
+        /* 클러스터 카드 */
+        .cluster-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 24px;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.8s ease-out;
+        }
+        
+        .cluster-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(0, 212, 255, 0.4);
+            box-shadow: 0 20px 40px rgba(0, 212, 255, 0.2);
+        }
+        
+        /* 클러스터 헤더 */
+        .cluster-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+        
+        .cluster-info {
+            flex: 1;
+        }
+        
+        .country-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.2), rgba(0, 102, 255, 0.2));
+            padding: 10px 20px;
+            border-radius: 30px;
+            margin-bottom: 15px;
+        }
+        
+        .country-flag {
+            font-size: 24px;
+        }
+        
+        .country-name {
+            font-size: 16px;
+            color: #00d4ff;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+        
+        .cluster-name {
+            font-size: 32px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+        
+        .cluster-description {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+        }
+        
+        .highlight-text {
+            color: #00d4ff;
+            font-weight: 600;
+        }
+        
+        /* 비디오 컨테이너 */
+        .video-container {
+            flex: 1;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(0, 212, 255, 0.15);
+            border-radius: 16px;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 200px;
+        }
+        
+        .video-container video {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            background: rgba(0, 0, 0, 0.5);
+        }
+        
+        .video-label {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            padding: 8px 16px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            z-index: 2;
+        }
+        
+        .play-icon {
+            width: 8px;
+            height: 8px;
+            background: #00ff00;
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        .video-label-text {
+            font-size: 13px;
+            color: #ffffff;
+            font-weight: 500;
+        }
+        
+        /* 주요 특징 */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+        
+        .feature-item {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(0, 212, 255, 0.1);
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .feature-item:hover {
+            background: rgba(0, 212, 255, 0.05);
+            border-color: rgba(0, 212, 255, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        .feature-number {
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #00d4ff, #0088cc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 5px;
+        }
+        
+        .feature-label {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        /* 애니메이션 */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+        }
+        
+        /* 장식 요소 */
+        .decoration-dots {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            opacity: 0.1;
+            z-index: 2;
+        }
+        
+        .dots-1 {
+            top: 100px;
+            right: 100px;
+            background: radial-gradient(circle, #00d4ff 2px, transparent 2px);
+            background-size: 20px 20px;
+        }
+        
+        .dots-2 {
+            bottom: 100px;
+            left: 100px;
+            background: radial-gradient(circle, #0088cc 2px, transparent 2px);
+            background-size: 20px 20px;
+        }
+        
+        /* 반응형 스케일링 */
+        @media (max-width: 1600px) {
+            .slide-container {
+                transform: scale(0.9);
+            }
+        }
+        
+        @media (max-width: 1440px) {
+            .slide-container {
+                transform: scale(0.8);
+            }
+        }
+        
+        @media (max-width: 1280px) {
+            .slide-container {
+                transform: scale(0.7);
+            }
+        }
+        
+        @media (max-width: 1024px) {
+            .slide-container {
+                transform: scale(0.6);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .slide-container {
+                transform: scale(0.45);
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .slide-container {
+                transform: scale(0.3);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-wrapper">
+        <div class="slide-container" id="slideContainer">
+            <!-- 배경 센터 이미지 -->
+            <div class="bg-center"></div>
+            
+            <!-- 장식 요소 -->
+            <div class="decoration-dots dots-1"></div>
+            <div class="decoration-dots dots-2"></div>
+            
+            <!-- 메인 컨텐츠 -->
+            <div class="content-area">
+                <!-- 타이틀 -->
+                <div class="title-section">
+                    <h1 class="main-title">해외 해양 클러스터 현황</h1>
+                    <p class="sub-title">글로벌 해양혁신 생태계 벤치마킹</p>
+                </div>
+                
+                <!-- 클러스터 그리드 -->
+                <div class="clusters-grid">
+                    <!-- 노르웨이 GCE Ocean Technology -->
+                    <div class="cluster-card">
+                        <div class="cluster-header">
+                            <div class="cluster-info">
+                                <div class="country-badge">
+                                    <span class="country-flag">🇳🇴</span>
+                                    <span class="country-name">NORWAY</span>
+                                </div>
+                                <h2 class="cluster-name">GCE Ocean Technology</h2>
+                                <p class="cluster-description">
+                                    <span class="highlight-text">세계 최고 수준</span>의 해양기술 클러스터<br>
+                                    130개+ 기업·기관이 참여하는 <span class="highlight-text">산업 주도형 혁신 네트워크</span>
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="video-container">
+                            <div class="video-label">
+                                <div class="play-icon"></div>
+                                <span class="video-label-text">GCE Ocean Technology</span>
+                            </div>
+                            <video autoplay muted loop playsinline>
+                                <source src="https://raw.githubusercontent.com/Hyongmo/Maritime-and-Fishereis-Startup/main/GCN%20Ocean%20Tech.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        
+                        <div class="features-grid">
+                            <div class="feature-item">
+                                <div class="feature-number">130+</div>
+                                <div class="feature-label">참여기업</div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-number">2006</div>
+                                <div class="feature-label">설립</div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-number">€2.5B</div>
+                                <div class="feature-label">연매출</div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-number">8,500+</div>
+                                <div class="feature-label">고용</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 캐나다 COVE -->
+                    <div class="cluster-card">
+                        <div class="cluster-header">
+                            <div class="cluster-info">
+                                <div class="country-badge">
+                                    <span class="country-flag">🇨🇦</span>
+                                    <span class="country-name">CANADA</span>
+                                </div>
+                                <h2 class="cluster-name">COVE Ocean Hub</h2>
+                                <p class="cluster-description">
+                                    <span class="highlight-text">북미 최대</span> 해양혁신 허브<br>
+                                    핼리팩스 워터프론트 기반 <span class="highlight-text">통합형 혁신 캠퍼스</span>
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="video-container">
+                            <div class="video-label">
+                                <div class="play-icon"></div>
+                                <span class="video-label-text">COVE Halifax</span>
+                            </div>
+                            <video autoplay muted loop playsinline>
+                                <source src="https://raw.githubusercontent.com/Hyongmo/Maritime-and-Fishereis-Startup/main/helifax.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        
+                        <div class="features-grid">
+                            <div class="feature-item">
+                                <div class="feature-number">60+</div>
+                                <div class="feature-label">입주기업</div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-number">2018</div>
+                                <div class="feature-label">개소</div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-number">7.7ha</div>
+                                <div class="feature-label">캠퍼스</div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-number">24/7</div>
+                                <div class="feature-label">실증시설</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 반응형 스케일 조정
+        function adjustScale() {
+            const container = document.getElementById('slideContainer');
+            const baseWidth = 1600;
+            const baseHeight = 1024;
+            const aspectRatio = baseWidth / baseHeight;
+            
+            const viewportWidth = window.innerWidth;
+            const viewportHeight = window.innerHeight;
+            const viewportRatio = viewportWidth / viewportHeight;
+            
+            let scale;
+            if (viewportRatio > aspectRatio) {
+                scale = viewportHeight / baseHeight;
+            } else {
+                scale = viewportWidth / baseWidth;
+            }
+            
+            // 최소/최대 스케일 제한
+            scale = Math.max(0.3, Math.min(scale, 2));
+            
+            container.style.transform = `scale(${scale})`;
+        }
+        
+        // 초기 실행
+        adjustScale();
+        
+        // 리사이즈 이벤트 처리
+        let resizeTimer;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(adjustScale, 100);
+        });
+        
+        // 화면 회전 처리
+        window.addEventListener('orientationchange', () => {
+            setTimeout(adjustScale, 100);
+        });
+        
+        // 전체화면 변경 처리
+        document.addEventListener('fullscreenchange', adjustScale);
+        
+        // 페이지 로드 완료 시 재조정
+        window.addEventListener('load', adjustScale);
+        
+        // 더블클릭으로 전체화면 토글
+        document.getElementById('slideContainer').addEventListener('dblclick', () => {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen();
+            } else if (document.exitFullscreen) {
+                document.exitFullscreen();
+            }
+        });
+    </script>
+<!-- Navigation injected on 2025-09-20 16:13 -->
+<script>
+(function () {
+  try {
+    const slides = [
+      "00.html",          
+      "01.html",
+      "02.html",
+      "03.html",
+      "04.html",
+      "05.html",
+      "06.html",
+      "07.html",
+      "08.html",
+      "09.html",
+      "10.html",
+      "11.html",
+      "12.html",
+      "13.html",
+      "14.html",
+      "15.html",
+      "16.html",
+      "17.html",
+      "18.html",
+      "19.html",
+      "20.html",
+      "21.html",
+      "22.html"
+    ];
+
+    const current = decodeURIComponent(window.location.pathname.split('/').pop() || '');
+    // NFC 매칭
+    const toNFC = s => (String.prototype.normalize ? s.normalize('NFC') : s);
+    const slidesN = slides.map(toNFC);
+    let idx = slidesN.indexOf(toNFC(current));
+
+    // 못 찾았을 때도 UX 안전하게 0으로 보정
+    if (idx < 0) idx = 0;
+
+    function go(i) {
+      const target = slides[(i + slides.length) % slides.length];
+      if (target) window.location.href = target;
+    }
+    function next() { go(idx + 1); }
+    function prev() { go(idx - 1); }
+
+    window.addEventListener('keydown', function (e) {
+      const tag = (e.target && e.target.tagName) ? e.target.tagName.toLowerCase() : '';
+      const editable = e.target && (e.target.isContentEditable || ['input','textarea','select'].includes(tag));
+      if (editable) return;
+
+      if (['ArrowRight','PageDown',' '].includes(e.key)) { e.preventDefault(); next(); }
+      else if (['ArrowLeft','PageUp','Backspace'].includes(e.key)) { e.preventDefault(); prev(); }
+      else if (e.key === 'Home') { e.preventDefault(); go(0); }
+      else if (e.key === 'End') { e.preventDefault(); go(slides.length - 1); }
+    }, true);
+
+    document.addEventListener('click', function (e) {
+      const interactive = e.target.closest && e.target.closest('a,button,input,textarea,select,video,audio,label,svg');
+      if (!interactive) next();
+    });
+
+    const hud = document.createElement('div');
+    hud.setAttribute('data-slide-hud', '1');
+    Object.assign(hud.style, {
+      position: 'fixed', right: '16px', bottom: '12px',
+      padding: '6px 10px', fontSize: '13px', lineHeight: '1.2',
+      borderRadius: '10px', background: 'rgba(0,0,0,0.35)', color: '#fff',
+      backdropFilter: 'blur(3px)', zIndex: 9999, userSelect: 'none', pointerEvents: 'none'
+    });
+    hud.textContent = ((idx + 1) + ' / ' + slides.length) + '  •  ← / → 또는 클릭';
+    document.body.appendChild(hud);
+
+    const link = document.createElement('link');
+    link.rel = 'prefetch';
+    link.as = 'document';
+    link.href = slides[(idx + 1) % slides.length];
+    document.head.appendChild(link);
+
+  } catch (err) {
+    console && console.warn && console.warn('Slide nav error:', err);
+  }
+})();
+</script>
+</body>
+</html>

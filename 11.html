@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>해양과학기술 산학연 협력센터</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans KR', sans-serif;
+            background: #0a1628;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        
+        /* 전체 배경 다크 네이비 */
+        .slide-wrapper {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #0a1628 0%, #1a2942 40%, #0f1e35 100%);
+        }
+        
+        /* 1600x1024 고정 컨테이너 */
+        .slide-container {
+            width: 1600px;
+            height: 1024px;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #0a1628 0%, #1a2942 40%, #0f1e35 100%);
+            transform-origin: center center;
+        }
+        
+        /* 배경 센터 이미지 */
+        .bg-center {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 1600px;
+            height: 1024px;
+            background-image: url('https://raw.githubusercontent.com/Hyongmo/busan-ocean-ai-images/main/center.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0.2;
+            filter: blur(1px);
+            z-index: 1;
+        }
+        
+        /* 네트워크 비주얼라이제이션 */
+        .network-visualization {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.08;
+            pointer-events: none;
+            z-index: 2;
+        }
+        
+        .network-node {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: radial-gradient(circle, #00d4ff, transparent);
+            border-radius: 50%;
+            animation: pulse 4s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { 
+                transform: scale(1); 
+                opacity: 0.6; 
+            }
+            50% { 
+                transform: scale(2); 
+                opacity: 1; 
+            }
+        }
+        
+        /* 파티클 효과 */
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 3;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: rgba(0, 212, 255, 0.5);
+            border-radius: 50%;
+            animation: particleFloat 25s infinite linear;
+        }
+        
+        @keyframes particleFloat {
+            0% {
+                transform: translateY(100vh) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.8;
+            }
+            90% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-100px) translateX(50px);
+                opacity: 0;
+            }
+        }
+        
+        /* 메인 콘텐츠 영역 */
+        .content-area {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 1600px;
+            height: 1024px;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            padding: 80px;
+            gap: 50px;
+        }
+        
+        /* 타이틀 섹션 */
+        .title-section {
+            text-align: center;
+            margin-bottom: 20px;
+            animation: fadeInDown 0.8s ease-out;
+        }
+        
+        .main-title {
+            font-size: 52px;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 15px;
+            text-shadow: 0 4px 20px rgba(0, 212, 255, 0.3);
+            letter-spacing: -1px;
+        }
+        
+        .subtitle {
+            font-size: 24px;
+            color: #00d4ff;
+            font-weight: 300;
+        }
+        
+        /* 네트워크 다이어그램 컨테이너 */
+        .network-diagram {
+            flex: 1;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* 중앙 허브 */
+        .center-hub {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(135deg, #1565c0, #42a5f5);
+            width: 380px;
+            height: 220px;
+            border-radius: 110px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            box-shadow: 0 30px 85px rgba(66, 165, 245, 0.5);
+            animation: centerPulse 3s infinite ease-in-out;
+        }
+        
+        .center-text {
+            font-size: 36px;
+            font-weight: 700;
+            color: white;
+            text-align: center;
+            line-height: 1.3;
+        }
+        
+        .center-subtitle {
+            font-size: 20px;
+            margin-top: 10px;
+            opacity: 0.9;
+        }
+        
+        @keyframes centerPulse {
+            0%, 100% { 
+                transform: translate(-50%, -50%) scale(1); 
+                box-shadow: 0 25px 70px rgba(66, 165, 245, 0.5); 
+            }
+            50% { 
+                transform: translate(-50%, -50%) scale(1.05); 
+                box-shadow: 0 25px 90px rgba(66, 165, 245, 0.7); 
+            }
+        }
+        
+        /* 입력 그룹 (왼쪽) */
+        .input-groups {
+            position: absolute;
+            left: 100px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+        
+        .input-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            animation: fadeInLeft 0.8s ease-out backwards;
+        }
+        
+        .input-item:nth-child(1) { animation-delay: 0.2s; }
+        .input-item:nth-child(2) { animation-delay: 0.3s; }
+        .input-item:nth-child(3) { animation-delay: 0.4s; }
+        .input-item:nth-child(4) { animation-delay: 0.5s; }
+        
+        .icon-circle {
+            width: 70px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+        }
+        
+        .input-box {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 16px;
+            padding: 18px 25px;
+            transition: all 0.3s ease;
+        }
+        
+        .input-box:hover {
+            transform: translateX(10px);
+            background: rgba(0, 212, 255, 0.05);
+            border-color: rgba(0, 212, 255, 0.4);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.2);
+        }
+        
+        .input-label {
+            font-size: 22px;
+            color: #ffffff;
+            font-weight: 600;
+        }
+        
+        .input-desc {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.6);
+            margin-top: 5px;
+        }
+        
+        /* 연결선 */
+        .connections {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        
+        .connection-line {
+            stroke: rgba(100, 181, 246, 0.4);
+            stroke-width: 2;
+            fill: none;
+            stroke-dasharray: 5, 5;
+            animation: dashFlow 15s linear infinite;
+        }
+        
+        @keyframes dashFlow {
+            to { stroke-dashoffset: -100; }
+        }
+        
+        /* 출력 섹션 (오른쪽) */
+        .output-section {
+            position: absolute;
+            right: 100px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            opacity: 0;
+            animation: slideInFromRight 1s ease-out 0.8s forwards;
+        }
+        
+        .output-icon {
+            font-size: 70px;
+            animation: rocketFloat 3s ease-in-out infinite;
+        }
+        
+        @keyframes rocketFloat {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            25% {
+                transform: translateY(-5px) rotate(-5deg);
+            }
+            75% {
+                transform: translateY(5px) rotate(5deg);
+            }
+        }
+        
+        .output-content {
+            text-align: left;
+        }
+        
+        .output-title {
+            font-size: 38px;
+            font-weight: 600;
+            color: #ffd93d;
+            margin-bottom: 10px;
+        }
+        
+        .output-desc {
+            font-size: 20px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        /* 하단 정보 바 */
+        .bottom-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px 40px;
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            animation: fadeInUp 1s ease-out 1.2s backwards;
+        }
+        
+        .info-group {
+            display: flex;
+            gap: 60px;
+        }
+        
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .info-icon {
+            font-size: 28px;
+            color: #4fc3f7;
+        }
+        
+        .info-text {
+            font-size: 20px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .info-highlight {
+            color: #ffd93d;
+            font-weight: 600;
+        }
+        
+        /* 애니메이션 */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes slideInFromRight {
+            from {
+                opacity: 0;
+                transform: translateY(-50%) translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(-50%) translateX(0);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* 반응형 스케일링 */
+        @media (max-width: 1600px) {
+            .slide-container {
+                transform: scale(0.9);
+            }
+        }
+        
+        @media (max-width: 1440px) {
+            .slide-container {
+                transform: scale(0.8);
+            }
+        }
+        
+        @media (max-width: 1280px) {
+            .slide-container {
+                transform: scale(0.7);
+            }
+        }
+        
+        @media (max-width: 1024px) {
+            .slide-container {
+                transform: scale(0.6);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .slide-container {
+                transform: scale(0.45);
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .slide-container {
+                transform: scale(0.3);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-wrapper">
+        <div class="slide-container" id="slideContainer">
+            <!-- 배경 센터 이미지 -->
+            <div class="bg-center"></div>
+            
+            <!-- 네트워크 비주얼라이제이션 -->
+            <div class="network-visualization">
+                <div class="network-node" style="top: 20%; left: 25%;"></div>
+                <div class="network-node" style="top: 30%; right: 30%; animation-delay: -1s;"></div>
+                <div class="network-node" style="bottom: 40%; left: 30%; animation-delay: -2s;"></div>
+                <div class="network-node" style="bottom: 30%; right: 25%; animation-delay: -3s;"></div>
+                <div class="network-node" style="top: 50%; left: 15%; animation-delay: -2.5s;"></div>
+                <div class="network-node" style="top: 60%; right: 35%; animation-delay: -1.5s;"></div>
+            </div>
+            
+            <!-- 파티클 효과 -->
+            <div class="particles">
+                <div class="particle" style="left: 10%; animation-delay: 0s;"></div>
+                <div class="particle" style="left: 25%; animation-delay: -5s;"></div>
+                <div class="particle" style="left: 40%; animation-delay: -10s;"></div>
+                <div class="particle" style="left: 55%; animation-delay: -15s;"></div>
+                <div class="particle" style="left: 70%; animation-delay: -3s;"></div>
+                <div class="particle" style="left: 85%; animation-delay: -8s;"></div>
+            </div>
+            
+            <!-- 메인 콘텐츠 -->
+            <div class="content-area">
+                <!-- 타이틀 섹션 -->
+                <div class="title-section">
+                    <h1 class="main-title">해양과학기술 산학연 협력센터</h1>
+                    <p class="subtitle">혁신 생태계의 중심축</p>
+                </div>
+                
+                <!-- 네트워크 다이어그램 -->
+                <div class="network-diagram">
+                    <!-- 연결선 SVG -->
+                    <svg class="connections" viewBox="0 0 1440 600">
+                        <line class="connection-line" x1="400" y1="150" x2="720" y2="300" />
+                        <line class="connection-line" x1="400" y1="225" x2="720" y2="300" />
+                        <line class="connection-line" x1="400" y1="300" x2="720" y2="300" />
+                        <line class="connection-line" x1="400" y1="375" x2="720" y2="300" />
+                        <line class="connection-line" x1="720" y1="300" x2="1040" y2="300" />
+                    </svg>
+                    
+                    <!-- 왼쪽 입력 그룹 -->
+                    <div class="input-groups">
+                        <div class="input-item">
+                            <div class="icon-circle">🏛️</div>
+                            <div class="input-box">
+                                <div class="input-label">공공기관</div>
+                                <div class="input-desc">KMI·KIOST·국립해양조사원</div>
+                            </div>
+                        </div>
+                        <div class="input-item">
+                            <div class="icon-circle">🎓</div>
+                            <div class="input-box">
+                                <div class="input-label">대학·연구소</div>
+                                <div class="input-desc">해양수산 전문인력 양성</div>
+                            </div>
+                        </div>
+                        <div class="input-item">
+                            <div class="icon-circle">💼</div>
+                            <div class="input-box">
+                                <div class="input-label">기업</div>
+                                <div class="input-desc">혁신기업·앵커기업</div>
+                            </div>
+                        </div>
+                        <div class="input-item">
+                            <div class="icon-circle">🌊</div>
+                            <div class="input-box">
+                                <div class="input-label">지자체·정부</div>
+                                <div class="input-desc">부산시·해양수산부</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 중앙 허브 -->
+                    <div class="center-hub">
+                        <div class="center-text">
+                            기획/지원/촉진/연결
+                            <div class="center-subtitle">산학연 협력센터</div>
+                        </div>
+                    </div>
+                    
+                    <!-- 오른쪽 출력 -->
+                    <div class="output-section">
+                        <div class="output-icon">🚀</div>
+                        <div class="output-content">
+                            <div class="output-title">혁신창업자</div>
+                            <div class="output-desc">해양 AI·데이터·혁신 산업 선도</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 하단 정보 바 -->
+                <div class="bottom-info">
+                    <div class="info-group">
+                        <div class="info-item">
+                            <span class="info-icon">📍</span>
+                            <span class="info-text">위치: <span class="info-highlight">영도 동삼동</span></span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-icon">🗓️</span>
+                            <span class="info-text">완공: <span class="info-highlight">2025년 말</span></span>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-icon">🎯</span>
+                        <span class="info-text">핵심역할: <span class="info-highlight">해양수산 산업 혁신 거점</span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 반응형 스케일 조정
+        function adjustScale() {
+            const container = document.getElementById('slideContainer');
+            const baseWidth = 1600;
+            const baseHeight = 1024;
+            const aspectRatio = baseWidth / baseHeight;
+            
+            const viewportWidth = window.innerWidth;
+            const viewportHeight = window.innerHeight;
+            const viewportRatio = viewportWidth / viewportHeight;
+            
+            let scale;
+            if (viewportRatio > aspectRatio) {
+                scale = viewportHeight / baseHeight;
+            } else {
+                scale = viewportWidth / baseWidth;
+            }
+            
+            // 최소/최대 스케일 제한
+            scale = Math.max(0.3, Math.min(scale, 2));
+            
+            container.style.transform = `scale(${scale})`;
+        }
+        
+        // 초기 실행
+        adjustScale();
+        
+        // 리사이즈 이벤트 처리
+        let resizeTimer;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(adjustScale, 100);
+        });
+        
+        // 화면 회전 처리
+        window.addEventListener('orientationchange', () => {
+            setTimeout(adjustScale, 100);
+        });
+        
+        // 전체화면 변경 처리
+        document.addEventListener('fullscreenchange', adjustScale);
+        
+        // 페이지 로드 완료 시 재조정
+        window.addEventListener('load', adjustScale);
+        
+        // 더블클릭으로 전체화면 토글
+        document.getElementById('slideContainer').addEventListener('dblclick', () => {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen();
+            } else if (document.exitFullscreen) {
+                document.exitFullscreen();
+            }
+        });
+    </script>
+<!-- Navigation injected on 2025-09-20 16:13 -->
+<script>
+(function () {
+  try {
+    const slides = [
+      "00.html",          
+      "01.html",
+      "02.html",
+      "03.html",
+      "04.html",
+      "05.html",
+      "06.html",
+      "07.html",
+      "08.html",
+      "09.html",
+      "10.html",
+      "11.html",
+      "12.html",
+      "13.html",
+      "14.html",
+      "15.html",
+      "16.html",
+      "17.html",
+      "18.html",
+      "19.html",
+      "20.html",
+      "21.html",
+      "22.html"
+    ];
+
+    const current = decodeURIComponent(window.location.pathname.split('/').pop() || '');
+    // NFC 매칭
+    const toNFC = s => (String.prototype.normalize ? s.normalize('NFC') : s);
+    const slidesN = slides.map(toNFC);
+    let idx = slidesN.indexOf(toNFC(current));
+
+    // 못 찾았을 때도 UX 안전하게 0으로 보정
+    if (idx < 0) idx = 0;
+
+    function go(i) {
+      const target = slides[(i + slides.length) % slides.length];
+      if (target) window.location.href = target;
+    }
+    function next() { go(idx + 1); }
+    function prev() { go(idx - 1); }
+
+    window.addEventListener('keydown', function (e) {
+      const tag = (e.target && e.target.tagName) ? e.target.tagName.toLowerCase() : '';
+      const editable = e.target && (e.target.isContentEditable || ['input','textarea','select'].includes(tag));
+      if (editable) return;
+
+      if (['ArrowRight','PageDown',' '].includes(e.key)) { e.preventDefault(); next(); }
+      else if (['ArrowLeft','PageUp','Backspace'].includes(e.key)) { e.preventDefault(); prev(); }
+      else if (e.key === 'Home') { e.preventDefault(); go(0); }
+      else if (e.key === 'End') { e.preventDefault(); go(slides.length - 1); }
+    }, true);
+
+    document.addEventListener('click', function (e) {
+      const interactive = e.target.closest && e.target.closest('a,button,input,textarea,select,video,audio,label,svg');
+      if (!interactive) next();
+    });
+
+    const hud = document.createElement('div');
+    hud.setAttribute('data-slide-hud', '1');
+    Object.assign(hud.style, {
+      position: 'fixed', right: '16px', bottom: '12px',
+      padding: '6px 10px', fontSize: '13px', lineHeight: '1.2',
+      borderRadius: '10px', background: 'rgba(0,0,0,0.35)', color: '#fff',
+      backdropFilter: 'blur(3px)', zIndex: 9999, userSelect: 'none', pointerEvents: 'none'
+    });
+    hud.textContent = ((idx + 1) + ' / ' + slides.length) + '  •  ← / → 또는 클릭';
+    document.body.appendChild(hud);
+
+    const link = document.createElement('link');
+    link.rel = 'prefetch';
+    link.as = 'document';
+    link.href = slides[(idx + 1) % slides.length];
+    document.head.appendChild(link);
+
+  } catch (err) {
+    console && console.warn && console.warn('Slide nav error:', err);
+  }
+})();
+</script>
+</body>
+</html>

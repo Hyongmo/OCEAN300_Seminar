@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>해양과학기술 산학연 협력센터 주요 사업</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans KR', sans-serif;
+            background: #0a1628;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        
+        /* 전체 배경 다크 네이비 */
+        .slide-wrapper {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #0a1628 0%, #1a2942 40%, #0f1e35 100%);
+        }
+        
+        /* 1600x1024 고정 컨테이너 */
+        .slide-container {
+            width: 1600px;
+            height: 1024px;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #0a1628 0%, #1a2942 40%, #0f1e35 100%);
+            transform-origin: center center;
+        }
+        
+        /* 배경 센터 이미지 */
+        .bg-center {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 1600px;
+            height: 1024px;
+            background-image: url('https://raw.githubusercontent.com/Hyongmo/busan-ocean-ai-images/main/center.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0.2;
+            filter: blur(1px);
+            z-index: 1;
+        }
+        
+        /* 메인 컨텐츠 영역 */
+        .content-area {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 1600px;
+            height: 1024px;
+            z-index: 10;
+            padding: 25px 50px;
+            display: flex;
+            flex-direction: column;
+            box-sizing: border-box;
+        }
+        
+        /* 타이틀 영역 */
+        .title-section {
+            text-align: center;
+            margin-bottom: 20px;
+            flex-shrink: 0;
+        }
+        
+        .main-title {
+            font-size: 42px;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 6px;
+            text-shadow: 0 4px 20px rgba(0, 212, 255, 0.3);
+            letter-spacing: -0.5px;
+        }
+        
+        .sub-title {
+            font-size: 20px;
+            color: #00d4ff;
+            font-weight: 300;
+        }
+        
+        /* 사업 그리드 */
+        .business-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+            flex: 1;
+            animation: fadeIn 1s ease-out;
+        }
+        
+        /* 사업 카드 */
+        .business-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 20px;
+            padding: 20px;
+            position: relative;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            overflow: hidden;
+        }
+        
+        .business-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(0, 212, 255, 0.4);
+            box-shadow: 0 15px 30px rgba(0, 212, 255, 0.12);
+        }
+        
+        /* 카드 헤더 */
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(0, 212, 255, 0.15);
+        }
+        
+        .card-number {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #00d4ff, #0088cc);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            flex-shrink: 0;
+            font-size: 18px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+        
+        .card-title {
+            flex: 1;
+            font-size: 20px;
+            font-weight: 700;
+            color: #ffffff;
+            line-height: 1.2;
+        }
+        
+        /* 카드 컨텐츠 */
+        .card-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        /* 목적 섹션 */
+        .purpose-section {
+            background: rgba(0, 212, 255, 0.05);
+            border-left: 3px solid #00d4ff;
+            padding: 12px 16px;
+            border-radius: 6px;
+        }
+        
+        .section-label {
+            font-size: 18px;
+            color: #00d4ff;
+            font-weight: 600;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .section-text {
+            font-size: 21px;
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.5;
+        }
+        
+        /* 프로세스 플로우 */
+        .process-flow {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 15px 0;
+            position: relative;
+        }
+        
+        .flow-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.9);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .flow-item:hover {
+            background: rgba(0, 212, 255, 0.1);
+            transform: scale(1.02);
+        }
+        
+        .flow-arrow {
+            position: absolute;
+            right: -15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #00d4ff;
+            font-size: 16px;
+        }
+        
+        .flow-arrow-down {
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #00d4ff;
+            font-size: 16px;
+        }
+        
+        .flow-item.highlight {
+            background: rgba(0, 212, 255, 0.15);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            font-weight: 600;
+        }
+        
+        /* 상세 정보 리스트 */
+        .detail-list {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .detail-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+        
+        .detail-label {
+            font-size: 19px;
+            color: #00d4ff;
+            font-weight: 600;
+            min-width: 100px;
+            flex-shrink: 0;
+        }
+        
+        .detail-text {
+            font-size: 19px;
+            color: rgba(255, 255, 255, 0.85);
+            line-height: 1.4;
+            flex: 1;
+        }
+        
+        /* 불릿 리스트 */
+        .bullet-list {
+            margin-left: 10px;
+            margin-top: 3px;
+        }
+        
+        .bullet-item {
+            font-size: 19px;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.5;
+            margin-bottom: 6px;
+            position: relative;
+            padding-left: 20px;
+        }
+        
+        .bullet-item:before {
+            content: "•";
+            color: #00d4ff;
+            position: absolute;
+            left: 0;
+        }
+        
+        /* 하이라이트 텍스트 */
+        .highlight {
+            color: #00d4ff;
+            font-weight: 600;
+        }
+        
+        /* 애니메이션 */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .business-card:nth-child(1) { animation-delay: 0.1s; }
+        .business-card:nth-child(2) { animation-delay: 0.2s; }
+        .business-card:nth-child(3) { animation-delay: 0.3s; }
+        .business-card:nth-child(4) { animation-delay: 0.4s; }
+        
+        /* 장식 요소 */
+        .decoration-line {
+            position: absolute;
+            width: 100px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #00d4ff, transparent);
+            opacity: 0.3;
+            z-index: 2;
+        }
+        
+        .line-top {
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .line-bottom {
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        /* 반응형 스케일링 */
+        @media (max-width: 1600px) {
+            .slide-container { transform: scale(0.9); }
+        }
+        
+        @media (max-width: 1440px) {
+            .slide-container { transform: scale(0.8); }
+        }
+        
+        @media (max-width: 1280px) {
+            .slide-container { transform: scale(0.7); }
+        }
+        
+        @media (max-width: 1024px) {
+            .slide-container { transform: scale(0.6); }
+        }
+        
+        @media (max-width: 768px) {
+            .slide-container { transform: scale(0.45); }
+        }
+        
+        @media (max-width: 480px) {
+            .slide-container { transform: scale(0.3); }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-wrapper">
+        <div class="slide-container" id="slideContainer">
+            <!-- 배경 센터 이미지 -->
+            <div class="bg-center"></div>
+            
+            <!-- 장식 요소 -->
+            <div class="decoration-line line-top"></div>
+            <div class="decoration-line line-bottom"></div>
+            
+            <!-- 메인 컨텐츠 -->
+            <div class="content-area">
+                <!-- 타이틀 -->
+                <div class="title-section">
+                    <h1 class="main-title">산학연 협력센터 주요 사업</h1>
+                    <p class="sub-title">혁신 성장을 위한 핵심 지원 프로그램</p>
+                </div>
+                
+                <!-- 사업 그리드 -->
+                <div class="business-grid">
+                    <!-- 사업 1: 특허기술 분석기반 성장전략 -->
+                    <div class="business-card">
+                        <div class="card-header">
+                            <div class="card-number">01</div>
+                            <h3 class="card-title">특허기술 분석기반 성장전략 지원사업</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="purpose-section">
+                                <div class="section-label">사업목적</div>
+                                <div class="section-text">
+                                    세계 주요 특허데이터 분석으로 <span class="highlight">신산업 전환 적기대응</span>
+                                </div>
+                            </div>
+                            <div class="process-flow">
+                                <div class="flow-item">
+                                    대상 분야 선정
+                                    <span class="flow-arrow">→</span>
+                                </div>
+                                <div class="flow-item">
+                                    국내외 특허 수집<br>및 전처리
+                                    <span class="flow-arrow">→</span>
+                                </div>
+                                <div class="flow-item">
+                                    분석 및<br>트렌드 도출
+                                    <span class="flow-arrow-down">↓</span>
+                                </div>
+                            </div>
+                            <div class="process-flow">
+                                <div class="flow-item highlight">
+                                    기업지원방안 수립
+                                    <span class="flow-arrow">←</span>
+                                </div>
+                                <div class="flow-item">
+                                    정책제안 연계
+                                    <span class="flow-arrow">←</span>
+                                </div>
+                                <div class="flow-item">
+                                    산업전환 시나리오<br>유망신산업 도출
+                                </div>
+                            </div>
+                            <div class="detail-list">
+                                <div class="detail-item">
+                                    <span class="detail-label">지원대상</span>
+                                    <span class="detail-text">해양클러스터 정책연구기관(주관), 전문 리서치기관 및 대학 산학협력단(참여)</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">지원내용</span>
+                                    <span class="detail-text">특허데이터 구입 및 분석비용</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">선정방법</span>
+                                    <span class="detail-text">기업 설문 및 인터뷰</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 사업 2: 스타트업 육성 -->
+                    <div class="business-card">
+                        <div class="card-header">
+                            <div class="card-number">02</div>
+                            <h3 class="card-title">해양산업 생태계 기반 조성을 위한 스타트업 육성</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="purpose-section">
+                                <div class="section-label">사업목적</div>
+                                <div class="section-text">
+                                    A/C 연계 해양과학기술 우수 스타트업 보육, <span class="highlight">첨단 해양산업 생태계 기반 조성</span>
+                                </div>
+                            </div>
+                            <div class="detail-list">
+                                <div class="detail-item">
+                                    <span class="detail-label">지원대상</span>
+                                    <span class="detail-text">해양산업 분야 창업기획자(액셀러레이터)</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">지원분야</span>
+                                    <span class="detail-text">유망 창업기업 발굴 및 보육을 위한 운영자금 지원</span>
+                                </div>
+                                <div class="bullet-list">
+                                    <div class="bullet-item">운영비: 기업 모집·선발, 교육·훈련, 멘토링, 자금 지원, 투자IR 등</div>
+                                    <div class="bullet-item">역량강화비: 해양수산 관련 특화교육, 네트워크 구축, 기관협업 등</div>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">지원내용</span>
+                                    <span class="detail-text">입주기업 진단을 통해 기업별 성과지표 설정, 보육프로그램 설계 및 운영</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">선정방법</span>
+                                    <span class="detail-text">모집공고에 따른 선정</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 사업 3: 정기 교류행사 및 포럼 -->
+                    <div class="business-card">
+                        <div class="card-header">
+                            <div class="card-number">03</div>
+                            <h3 class="card-title">정기 교류행사 및 포럼 운영 사업</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="purpose-section">
+                                <div class="section-label">사업목적</div>
+                                <div class="section-text">
+                                    해양클러스터 전문기관 보유기술 소개 및 기업의 상용화 수요 결합으로 <span class="highlight">산학연 연계 기반 마련</span>
+                                </div>
+                            </div>
+                            <div class="detail-list">
+                                <div class="detail-item">
+                                    <span class="detail-label">참여대상</span>
+                                    <span class="detail-text">해수부 및 산하기관, 해양클러스터 전문기관, 대학의 기술사업화 및 민간기업 기술사업화 부문, 수요기업 등</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">사업내용</span>
+                                    <span class="detail-text">기술이전 교류회 및 설명회 정기 개최</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 사업 4: 해양혁신클러스터 국제협력 -->
+                    <div class="business-card">
+                        <div class="card-header">
+                            <div class="card-number">04</div>
+                            <h3 class="card-title">해양혁신클러스터 국제협력 사업</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="purpose-section">
+                                <div class="section-label">사업목적</div>
+                                <div class="section-text">
+                                    기업 <span class="highlight">국제 네트워크 진출</span> 지원 및 해양산업 전시회 참가
+                                </div>
+                            </div>
+                            <div class="detail-list">
+                                <div class="detail-item">
+                                    <span class="detail-label">지원대상</span>
+                                    <span class="detail-text">입주기업</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">지원내용</span>
+                                    <span class="detail-text">기업 공동부스 개설 비용 등</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 반응형 스케일 조정
+        function adjustScale() {
+            const container = document.getElementById('slideContainer');
+            const baseWidth = 1600;
+            const baseHeight = 1024;
+            const aspectRatio = baseWidth / baseHeight;
+            
+            const viewportWidth = window.innerWidth;
+            const viewportHeight = window.innerHeight;
+            const viewportRatio = viewportWidth / viewportHeight;
+            
+            let scale;
+            if (viewportRatio > aspectRatio) {
+                scale = viewportHeight / baseHeight;
+            } else {
+                scale = viewportWidth / baseWidth;
+            }
+            
+            // 최소/최대 스케일 제한
+            scale = Math.max(0.3, Math.min(scale, 2));
+            
+            container.style.transform = `scale(${scale})`;
+        }
+        
+        // 초기 실행
+        adjustScale();
+        
+        // 리사이즈 이벤트 처리
+        let resizeTimer;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(adjustScale, 100);
+        });
+        
+        // 화면 회전 처리
+        window.addEventListener('orientationchange', () => {
+            setTimeout(adjustScale, 100);
+        });
+        
+        // 전체화면 변경 처리
+        document.addEventListener('fullscreenchange', adjustScale);
+        
+        // 페이지 로드 완료 시 재조정
+        window.addEventListener('load', adjustScale);
+        
+        // 더블클릭으로 전체화면 토글
+        document.getElementById('slideContainer').addEventListener('dblclick', () => {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen();
+            } else if (document.exitFullscreen) {
+                document.exitFullscreen();
+            }
+        });
+    </script>
+<!-- Navigation injected on 2025-09-20 16:13 -->
+<script>
+(function () {
+  try {
+    const slides = [
+      "00.html",          
+      "01.html",
+      "02.html",
+      "03.html",
+      "04.html",
+      "05.html",
+      "06.html",
+      "07.html",
+      "08.html",
+      "09.html",
+      "10.html",
+      "11.html",
+      "12.html",
+      "13.html",
+      "14.html",
+      "15.html",
+      "16.html",
+      "17.html",
+      "18.html",
+      "19.html",
+      "20.html",
+      "21.html",
+      "22.html"
+    ];
+
+    const current = decodeURIComponent(window.location.pathname.split('/').pop() || '');
+    // NFC 매칭
+    const toNFC = s => (String.prototype.normalize ? s.normalize('NFC') : s);
+    const slidesN = slides.map(toNFC);
+    let idx = slidesN.indexOf(toNFC(current));
+
+    // 못 찾았을 때도 UX 안전하게 0으로 보정
+    if (idx < 0) idx = 0;
+
+    function go(i) {
+      const target = slides[(i + slides.length) % slides.length];
+      if (target) window.location.href = target;
+    }
+    function next() { go(idx + 1); }
+    function prev() { go(idx - 1); }
+
+    window.addEventListener('keydown', function (e) {
+      const tag = (e.target && e.target.tagName) ? e.target.tagName.toLowerCase() : '';
+      const editable = e.target && (e.target.isContentEditable || ['input','textarea','select'].includes(tag));
+      if (editable) return;
+
+      if (['ArrowRight','PageDown',' '].includes(e.key)) { e.preventDefault(); next(); }
+      else if (['ArrowLeft','PageUp','Backspace'].includes(e.key)) { e.preventDefault(); prev(); }
+      else if (e.key === 'Home') { e.preventDefault(); go(0); }
+      else if (e.key === 'End') { e.preventDefault(); go(slides.length - 1); }
+    }, true);
+
+    document.addEventListener('click', function (e) {
+      const interactive = e.target.closest && e.target.closest('a,button,input,textarea,select,video,audio,label,svg');
+      if (!interactive) next();
+    });
+
+    const hud = document.createElement('div');
+    hud.setAttribute('data-slide-hud', '1');
+    Object.assign(hud.style, {
+      position: 'fixed', right: '16px', bottom: '12px',
+      padding: '6px 10px', fontSize: '13px', lineHeight: '1.2',
+      borderRadius: '10px', background: 'rgba(0,0,0,0.35)', color: '#fff',
+      backdropFilter: 'blur(3px)', zIndex: 9999, userSelect: 'none', pointerEvents: 'none'
+    });
+    hud.textContent = ((idx + 1) + ' / ' + slides.length) + '  •  ← / → 또는 클릭';
+    document.body.appendChild(hud);
+
+    const link = document.createElement('link');
+    link.rel = 'prefetch';
+    link.as = 'document';
+    link.href = slides[(idx + 1) % slides.length];
+    document.head.appendChild(link);
+
+  } catch (err) {
+    console && console.warn && console.warn('Slide nav error:', err);
+  }
+})();
+</script>
+</body>
+</html>
